@@ -101,12 +101,13 @@ border-radius: 8px;
 max-width: 400px;
 }
 
-/* Information about the timeline */
+/* Information about the timeline 
 .info {
 display: flex;
 flex-direction: column;
 gap: 10px;
 }
+*/
 
 /* Title of the card */
 .title {
