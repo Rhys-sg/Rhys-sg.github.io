@@ -27,7 +27,7 @@
 }
 
 /* spacing on all sections */
-/* #about, #services, #portfolio, #contact {
+/* #about, #portfolio, #contact {
     margin-top: 4rem;
     padding-top: 4rem;
 } */
@@ -40,12 +40,12 @@
     width: 100%;
 }
 
-/* services section css */
-.servicesText.card {
+/* portfolio section css */
+.portfolioText.card {
     height: 280px;
     cursor: pointer;
   }
-.servicesIcon {
+.portfolioIcon {
     font-size: 36px;
     text-align: center;
     width: 100%;
@@ -53,10 +53,10 @@
 .card-title {
     text-align: center;
 }
-.card:hover .servicesIcon {
+.card:hover .portfolioIcon {
     color: #008000;
 }
-.servicesText:hover {
+.portfolioText:hover {
     border: 1px solid #008000;
 }
 
