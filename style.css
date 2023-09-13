@@ -82,7 +82,7 @@
     position: relative;
     background: #f00;
 }
-
+/* 
 .card:nth-child(even){
     margin-left: auto;
 }
@@ -228,6 +228,7 @@
     height: 100%;
     border-radius: 5px;
 }
+ */
 
 /* social media icons styling */
 .social-icons {
