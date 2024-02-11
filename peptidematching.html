@@ -1,3 +1,5 @@
+can you make it so that left-box is housed within container so that i can have multiple copies below it?
+
 <!DOCTYPE HTML>
 <!--
 	Phantom by HTML5 UP
@@ -51,14 +53,36 @@
 						<div class="inner">
 							<h1>Peptide Matching</h1>
 							<span class="image main"><img src="images/pic13.jpg" alt="" /></span>
-							<p>Peptides are short chains of amino acids linked by peptide bonds. We can precisely determine the mass of a series of amino acids using mass spectroscopy. After MS1, we know what amino acids are in a peptide and how often each amino acid occurs. However, we do not know the order. By fragmenting the peptide in MS2, we can know the masses sub-peptides from length 2 (dipeptides) to the length of the peptide. Knowing this, we can use an algorithm to reassemble the peptide. 
-							<p>The standard industry approach compares the masses to those in a known protein database. Instead, this algorithm can be run locally and would not need outside information. This algorithm takes the series of sub-peptide masses as arrays and iterates through them. The smallest mass is a dipeptide and either b(2) or y(2). Iterating through the masses, if the next mass equals b(n) or y(n) + a known amino acid in the peptide, we know the amino acid is next in the order. Since we cannot determine the order of the dipeptides, we use the last added amino acid for y to determine the start of b and vice versa.
-							<p>The next version of this algorithm will account for missing masses.
-							<p>See more in the current GitHub repository, <a href="https://github.com/Rhys-sg/PeptideMatching">here</a></p>
-								
+							<p>Peptides are short chains of amino acids linked by peptide bonds. We can precisely determine the mass of a series of amino acids using mass spectrometry. After MS1, we know what amino acids are in a peptide and how often each amino acid occurs. However, we do not know the order. By fragmenting the peptide in MS2, we can know the masses sub-peptides from length 2 (dipeptides) to the length of the peptide. Knowing this, we can use an algorithm to reassemble the peptide.</p>
+						</div>
+					
+						<div class="container">
+							<div class="vertical-container">
+								<div class="container">
+									<button id="reset-btn" style="display: none;" onclick="resetBox()">x</button>
+									<div class="box" id="left-box">
+										<div id="file-container">
+											<input type="file" id="file-input" accept=".xlsx, .xls" style="display: none;" onchange="handleFileSelect(event)">
+											<label for="file-input" id="file-label">Click to Upload Mass Spectrometry Data</label>
+										</div>
+									</div>
+								</div>
+								<div class="container">
+									<div class="box" id="left-box" contenteditable="true" oninput="handleInput(this)">
+										Start typing here...
+									</div>
+								</div>
+							</div>
+							
+					
+							<div class="box" id="right-box">
+								<p>Text description goes here</p>
+							</div>
 						</div>
 					</div>
+				
 
+					
 				<!-- Footer -->
 					<footer id="footer">
 						<div class="inner">
@@ -96,7 +120,7 @@
 					</footer>
 
 			</div>
-
+		
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/browser.min.js"></script>
@@ -104,5 +128,59 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 
+		<!-- Custom JavaScript for file handling -->
+		<script>
+			function handleFileSelect(event) {
+			var fileInput = document.getElementById('file-input');
+			var fileLabel = document.getElementById('file-label');
+			var resetBtn = document.getElementById('reset-btn');
+			var leftBox = document.getElementById('left-box');
+
+			var file = fileInput.files[0];
+
+			if (file) {
+				// Check if the selected file is an Excel file
+				if (file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || file.type === 'application/vnd.ms-excel') {
+					// Change the text in the box
+					fileLabel.textContent = file.name + ' Uploaded';
+
+					// Show the reset button
+					resetBtn.style.display = 'inline';
+
+					// Add the uploaded class to disable hover
+					leftBox.classList.add('uploaded');
+				} else {
+					alert('Please select a valid Excel file.');
+				}
+			}
+		}
+
+		function resetBox() {
+			var fileInput = document.getElementById('file-input');
+			var fileLabel = document.getElementById('file-label');
+			var resetBtn = document.getElementById('reset-btn');
+			var leftBox = document.getElementById('left-box');
+
+			// Reset the file input
+			fileInput.value = null;
+
+			// Reset the text in the box
+			fileLabel.textContent = 'Click to Upload Mass Spectrometry Data';
+
+			// Hide the reset button
+			resetBtn.style.display = 'none';
+
+			// Remove the uploaded class to enable hover
+			leftBox.classList.remove('uploaded');
+		}
+
+		function handleInput(element) {
+			var placeholder = element.getAttribute("placeholder");
+			if (element.innerText.trim() === placeholder) {
+			element.innerText = '';
+			}
+		}
+
+		</script>
 	</body>
 </html>

@@ -72,6 +72,81 @@ input, select, textarea {
 	appearance: none;
 }
 
+
+
+
+/* Newly Added */
+
+.container {
+    display: flex;
+	justify-content: center;
+}
+
+.vertical-container {
+	flex-direction: column;
+	width: 25%;
+    display: flex;
+	justify-content: center;
+}
+
+
+.box {
+	height: 3.5em;
+    padding: 20px;
+    border: 2px dashed #ccc;
+    margin: 0 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.box.uploaded {
+    background-color: #b6e4b7;
+	border: 2px solid #76b979;
+    pointer-events: none;
+	width: 21%;
+}
+
+#reset-btn.uploaded {
+    background-color: #4CAF50;
+    pointer-events: auto;
+}
+
+#right-box {
+	width: 25%;
+    background-color: #f0f0f0;
+}
+
+#left-box {
+    width: 100%;
+}
+
+#left-box label:hover {
+    color: #f2849e;
+    cursor: pointer;
+}
+
+#left-box label:hover {
+    cursor: pointer;
+}
+
+#left-box.uploaded label:hover {
+    cursor: default;
+}
+
+div#left-box #reset-btn {
+	color: #f2849e;
+    width: 20px;
+    height: 20px !important;
+    margin-right: 10px;
+}
+
+
+
+
+
+
 /* Basic */
 
 	@-ms-viewport {
