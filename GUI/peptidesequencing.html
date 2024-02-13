@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peptide Sequencing Simulation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="info">
+    <h1>Peptide Sequencing Simulation</h1>
+    <p>
+      Below is a list of amino acids forming a peptide. The graphical representations on the right represent the intensity as a function of the 
+      mass-to-charge ratio generated from simulating mass spectrometry on the peptide. Each mass is a peptide fragment. The fragments range in length 
+      from dipeptides (length 2) to the entire peptide. All fragments include either the C-terminus, N-terminus, or both if they represent the whole 
+      peptide. However, without sequencing the peptide, one cannot know if a fragment contains the C-terminus or N-terminus.<br><br> In the graphical 
+      representation below, the list of amino acids can be moved, which changes the simulated masses. Based on the masses of an end "Goal" peptide, 
+      reorder the "Current" amino acids to match the peptide. When an individual mass frequency is correct, it will appear green. Hover over the bars 
+      to get the combined masses.
+    </p>
+  </div>
+  <div class="content">
+    <div class="container">
+      <ul class="sortable-list"></ul>
+      <div class="graph">
+        <h2>Current Masses</h2>
+        <div class="upperGraph graph-container"></div>
+        <h2>Goal Masses</h2>
+        <div class="lowerGraph graph-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+  <script src="script.js"></script>
+</body> 
+</html>
