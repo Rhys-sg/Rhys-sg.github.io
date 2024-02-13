@@ -109,11 +109,8 @@ document.addEventListener("DOMContentLoaded", function() {
     for (let i = 1; i <= AMINO_ACID_COUNT; i++) {
         const listItem = createListItem(i);
         container.appendChild(listItem);
-    }
+    }    
 
-    // console.log(liMap);
-    // console.log(mass_li);
-    // liMap.get(1).style.backgroundColor = "red";
     
 
     // ---------------------------------------------------------------------------------------- //
@@ -132,18 +129,36 @@ document.addEventListener("DOMContentLoaded", function() {
     ]);
 
   
-    // Function to generate a random list of amino acid names
-    function getgoal_peptide() {
-      let names = [...amino_acids.keys()];
-      let goal_peptide = [];
+    // // Function to generate a random list of amino acid names
+    // function getgoal_peptide() {
+    //   let names = [...amino_acids.keys()];
+    //   let goal_peptide = [];
   
-      for (let i = 0; i < AMINO_ACID_COUNT; i++) {
-        let randint = Math.floor(Math.random() * names.length)
-        goal_peptide.push(names[randint]);
-      }
+    //   for (let i = 0; i < AMINO_ACID_COUNT; i++) {
+    //     let randint = Math.floor(Math.random() * names.length)
+    //     goal_peptide.push(names[randint]);
+    //   }
       
-      return goal_peptide;
-    }
+    //   return goal_peptide;
+    // }
+
+
+    // Function to generate a random list of amino acid names without repeating amino acids
+    function getgoal_peptide() {
+        let names = [...amino_acids.keys()];
+        let goal_peptide = [];
+
+        while (goal_peptide.length < AMINO_ACID_COUNT) {
+            let randint = Math.floor(Math.random() * names.length);
+            let aminoAcid = names[randint];
+            if (!goal_peptide.includes(aminoAcid)) {
+                goal_peptide.push(aminoAcid);
+            }
+        }
+        
+        return goal_peptide;
+      }
+    
 
   
     // Function to shuffle an array
@@ -158,7 +173,16 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('name' + (i + 1)).innerHTML = current_peptide[i];
         document.getElementById('mass' + (i + 1)).innerHTML = amino_acids.get(current_peptide[i]);
 
-        mass_li.set(amino_acids.get(current_peptide[i]), liMap.get(i + 1));
+        const key = amino_acids.get(current_peptide[i]);
+        const value = liMap.get(i + 1);
+
+        if (mass_li.has(key)) {
+            const existingList = mass_li.get(key);
+            existingList.push(value);
+            mass_li.set(key, existingList);
+        } else {
+            mass_li.set(key, [value]);
+        }
       }
     }
   
@@ -368,7 +392,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Function to create bars with labels
-    function createBars(svg, current_masses, other_masses, color1, color2, sumMap){
+    function createBars(svg, current_masses, other_masses, color1, color2, sumMap, goal){
         const barWidth = 7;
         const distance_at_end = 50;
         const label_height_difference = 25;
@@ -396,6 +420,7 @@ document.addEventListener("DOMContentLoaded", function() {
             text.setAttribute("x", x);
             text.setAttribute("y", y + label_height_difference);
             text.setAttribute("font-size", "16");
+            text.setAttribute("text-anchor", "middle");
             text.textContent = current_masses[i];
             text.style.visibility = "hidden";
     
@@ -406,18 +431,17 @@ document.addEventListener("DOMContentLoaded", function() {
     
             rect.addEventListener("mouseout", function() {
                 text.style.visibility = "hidden";
+                changeItemColor(current_masses[i], sumMap, "grey", "grey", "1px")
+                
             });
 
             // Event listener to highlight amino acids
             rect.addEventListener("click", function() {
-                console.log(current_masses[i])
-                console.log(sumMap);
-                console.log(sumMap[current_masses[i]]);
-
-                // for (let i = 0; i < sumMap[current_masses[i]].length; i++) {
-                //     mass_li.get(sumMap[i]).style.backgroundColor = "red";
-                //     // liMap.get(sumMap[i]).style.backgroundColor = "red";
-                // }
+                if (current_masses[i] === other_masses[i]) { 
+                    changeItemColor(current_masses[i], sumMap, "green", "orange","2px")
+                } else {
+                    changeItemColor(current_masses[i], sumMap,  "red", "orange", "2px")
+                }
             });
 
     
@@ -426,9 +450,36 @@ document.addEventListener("DOMContentLoaded", function() {
             svg.appendChild(text);
 
             drawBar(rect, y, height, i);
+
+            if (current_masses === other_masses) {
+                confetti();
+            }
         }
     }
     
+    // Function to change the color of the amino acid list items
+    function changeItemColor(mass, sumMap, color1, color2, width) {
+        // Iterate over the sumMap to find the mass
+        sumMap.forEach(function(list) {
+            // Check if the mass is equal to the sum of the list
+            if (list.reduce((partialSum, a) => partialSum + a, 0).toFixed(5) == mass) {
+                // Iterate over the list to change the color of repeating masses
+                list.forEach(function(mass) {
+                    // Change the base color for the list items
+                    // if (mass_li.get(mass).length == 1) {
+                        mass_li.get(mass)[0].style.borderColor = color1;
+                        mass_li.get(mass)[0].style.borderWidth = width;
+                    //     return;
+                    // }
+                    // // Change the base color for the list items
+                    // for (let i = 0; i < mass_li.get(mass).length; i++) {
+                    //     mass_li.get(mass)[i].style.borderColor = color2;
+                    //     mass_li.get(mass)[i].style.borderWidth = width;
+                    // }
+                });
+            }
+        });
+    }
 
     // Function to concatenate the tens place values of a list of floats
     function generateSeed(floats) {
@@ -477,11 +528,24 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    // Function to create confetti
+    function confetti() {
+        // Pass in the id of an element
+        let confetti = new Confetti('demo');
+
+        // Edit given parameters
+        confetti.setCount(75);
+        confetti.setSize(1);
+        confetti.setPower(25);
+        confetti.setFade(false);
+        confetti.destroyTarget(true);
+    }
+
     // Initialize the graph with axes and bars
     function initializeGraph(current_masses, goal_masses, current_sumMap, goal_sumMap) {
         createAxis(lowerGraphSvg, upperGraphSvg);
-        createBars(upperGraphSvg, current_masses, goal_masses, "red", "green", current_sumMap);
-        createBars(lowerGraphSvg, goal_masses, current_masses, "black", "black", goal_sumMap);
+        createBars(upperGraphSvg, current_masses, goal_masses, "red", "green", current_sumMap, false);
+        createBars(lowerGraphSvg, goal_masses, current_masses, "black", "black", goal_sumMap, true);
     }
 
     // Function to update the graph based on the new masses
@@ -497,7 +561,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         // Update the bars
-        createBars(upperGraphSvg, update_current_masses, goal_masses, "red", "green", current_sumMap);
+        createBars(upperGraphSvg, update_current_masses, goal_masses, "red", "green", current_sumMap, false);
     }
 
     const sortableListHeight = sortableList.offsetHeight;
