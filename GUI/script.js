@@ -145,16 +145,23 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Function to generate a random list of amino acid names without repeating amino acids
     function getgoal_peptide() {
+        nonrandom = ["ISGCHK", "LARSKF", "TSADFP", "VKDMHE", "TWRNGP", "DVTLKF", "FQSHVL", "PVYAWM", "GVIPYE", "YSPQLW", "RWNGTS", "PLQHYN"]
+
         let names = [...amino_acids.keys()];
         let goal_peptide = [];
-
-        while (goal_peptide.length < AMINO_ACID_COUNT) {
-            let randint = Math.floor(Math.random() * names.length);
-            let aminoAcid = names[randint];
-            if (!goal_peptide.includes(aminoAcid)) {
-                goal_peptide.push(aminoAcid);
-            }
+        
+        let aminoAcid = nonrandom[Math.floor(Math.random() * nonrandom.length)];
+        for (let i = 0; i < aminoAcid.length; i++) {
+            goal_peptide.push(aminoAcid[i]);
         }
+
+        // while (goal_peptide.length < AMINO_ACID_COUNT) {
+        //     let randint = Math.floor(Math.random() * names.length);
+        //     let aminoAcid = names[randint];
+        //     if (!goal_peptide.includes(aminoAcid)) {
+        //         goal_peptide.push(aminoAcid);
+        //     }
+        // }
         
         return goal_peptide;
       }
@@ -450,10 +457,6 @@ document.addEventListener("DOMContentLoaded", function() {
             svg.appendChild(text);
 
             drawBar(rect, y, height, i);
-
-            if (current_masses === other_masses) {
-                confetti();
-            }
         }
     }
     
@@ -527,20 +530,7 @@ document.addEventListener("DOMContentLoaded", function() {
             rect.remove();
         });
     }
-
-    // Function to create confetti
-    function confetti() {
-        // Pass in the id of an element
-        let confetti = new Confetti('demo');
-
-        // Edit given parameters
-        confetti.setCount(75);
-        confetti.setSize(1);
-        confetti.setPower(25);
-        confetti.setFade(false);
-        confetti.destroyTarget(true);
-    }
-
+    
     // Initialize the graph with axes and bars
     function initializeGraph(current_masses, goal_masses, current_sumMap, goal_sumMap) {
         createAxis(lowerGraphSvg, upperGraphSvg);
