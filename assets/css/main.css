@@ -48,7 +48,21 @@ blockquote, q {
 
 table {
 	border-collapse: collapse;
-	border-spacing: 0;
+	width: 100%;
+}
+
+th, td {
+	padding: 8px;
+	text-align: left;
+}
+
+td {
+	padding-right: 80px;
+	padding-left: 80px
+}
+
+td:first-child {
+	font-weight: bold;
 }
 
 body {
@@ -2447,7 +2461,7 @@ div#left-box #reset-btn {
 
 /* Table */
 
-	.table-wrapper {
+	/* .table-wrapper {
 		-webkit-overflow-scrolling: touch;
 		overflow-x: auto;
 	}
@@ -2510,7 +2524,7 @@ div#left-box #reset-btn {
 
 			table.alt tfoot {
 				border-top: 0;
-			}
+			} */
 
 /* Button */
 
@@ -2691,9 +2705,8 @@ div#left-box #reset-btn {
 					left: 0;
 					width: 100%;
 					height: 100%;
-					opacity: 1.0;
 					z-index: 1;
-					opacity: 0.8;
+					opacity: 0.12;
 				}
 
 				.tiles article > .image:after {
@@ -2709,7 +2722,7 @@ div#left-box #reset-btn {
 					left: 0;
 					width: 100%;
 					height: 100%;
-					background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cstyle%3Eline %7B stroke-width: 0.25px%3B stroke: %23ffffff%3B %7D%3C/style%3E%3Cline x1='0' y1='0' x2='100' y2='100' /%3E%3Cline x1='100' y1='0' x2='0' y2='100' /%3E%3C/svg%3E");
+					/* background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cstyle%3Eline %7B stroke-width: 0.25px%3B stroke: %23ffffff%3B %7D%3C/style%3E%3Cline x1='0' y1='0' x2='100' y2='100' /%3E%3Cline x1='100' y1='0' x2='0' y2='100' /%3E%3C/svg%3E"); */
 					background-position: center;
 					background-repeat: no-repeat;
 					background-size: 100% 100%;
@@ -3240,7 +3253,7 @@ div#left-box #reset-btn {
 /* Footer */
 
 	#footer {
-		padding: 5em 0 6em 0 ;
+		padding: 2em 0 2em 0 ;
 		background-color: #f6f6f6;
 	}
 
@@ -3280,6 +3293,7 @@ div#left-box #reset-btn {
 				list-style: none;
 				font-size: 0.8em;
 				color: rgba(88, 88, 88, 0.5);
+				text-align: center;
 			}
 
 				#footer > .inner .copyright a {

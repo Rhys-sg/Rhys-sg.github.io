@@ -1,0 +1,7 @@
+# Peptide Sequencing Simulation
+
+The GUI has a list of amino acids forming a peptide. The graphical representations on the right represent the intensity as a function of the mass-to-charge ratio generated from simulating mass spectrometry on the peptide. Each mass is a peptide fragment. The fragments range in length from dipeptides (length 2) to the entire peptide. All fragments include either the C-terminus, N-terminus, or both if they represent the whole peptide. However, without sequencing the peptide, one cannot know if a fragment contains the C-terminus or N-terminus.
+
+In the graphical representation below, the list of amino acids can be moved, which changes the simulated masses. Based on the masses of an end "Goal" peptide, reorder the "Current" amino acids to match the peptide. When an individual mass frequency is correct, it will appear green. Hover over the bars to get the combined masses.
+
+By clicking on a mass-to-charge ratio bar, the GUI highlights the amino acids that represent the fragment used to generate that bar. If the fragment is in the correct order and aligns with the goal peptide, the amino acids representing the fragment are highlighted green. Otherwise, they are red. Click the current peptide bars to know how many amino acids are in the fragment and if it contains the C- or N-terminus. Click the goal bars to know what the order of amino acids needs to be to match. 
