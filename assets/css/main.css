@@ -58,11 +58,19 @@ th, td {
 
 td {
 	padding-right: 80px;
-	padding-left: 80px
+	padding-left: 80px;
 }
 
 td:first-child {
 	font-weight: bold;
+}
+
+td p {
+	margin: 20; /* Remove default margin of <p> tag */
+}
+
+td p {
+	margin-right:100px; 
 }
 
 body {
