@@ -5,23 +5,92 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Peptide Sequencing Simulation</title>
   <link rel="stylesheet" href="peptidesequencingGUI/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    .custom-btn {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-align: center;
+        position: fixed;
+        right: 20px;
+        top: 20px; /* Adjust as needed */
+      }
+
+      .custom-btn:hover {
+          background-color: #0056b3;
+      }
+
+      .custom-btn i {
+          line-height: 30px;
+      }
+
+      .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+      }
+
+      .popup {
+        display: none;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        z-index: 1000;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 7px;
+      }
+
+      .popup h2 {
+        margin-top: 0;
+        text-align: center;
+        margin-bottom: 1em;
+      }
+
+      .popup p {
+        margin-bottom: 1em;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .close {
+        margin-top: 20px;
+        padding: 8px 16px;
+        border: 1px solid #007bff;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .close:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+      }
+  </style>
 </head>
 <body>
   <div class="info">
     <h1>Peptide Sequencing Simulation</h1>
-    <p>
-      Below is a list of amino acids forming a peptide. The graphical representations on the right represent the intensity as a function of the 
-      mass-to-charge ratio generated from simulating mass spectrometry on the peptide. Each mass is a peptide fragment. The fragments range in length 
-      from dipeptides (length 2) to the entire peptide. All fragments include either the C-terminus, N-terminus, or both if they represent the whole 
-      peptide. However, without sequencing the peptide, one cannot know if a fragment contains the C-terminus or N-terminus.<br><br> In the graphical 
-      representation below, the list of amino acids can be moved, which changes the simulated masses. Based on the masses of an end "Goal" peptide, 
-      reorder the "Current" amino acids to match the peptide. When an individual mass frequency is correct, it will appear green. Hover over the bars 
-      to get the combined masses.<br><br>By clicking on a mass-to-charge ratio bar, the GUI highlights the amino acids that represent the fragment used 
-      to generate that bar. If the fragment is in the correct order and aligns with the goal peptide, the amino acids representing the fragment are 
-      highlighted green. Otherwise, they are red. Click the current peptide bars to know how many amino acids are in the fragment and if 
-      it contains the C- or N-terminus. Click the goal bars to know what the order of amino acids needs to be to match. 
-    </p>
   </div>
+  <button id="helpBtn" class="custom-btn"><i class="fas fa-question"></i></button>
   <div class="content">
     <div class="container">
       <ul class="sortable-list"></ul>
@@ -34,7 +103,42 @@
     </div>
   </div>
 
+  <div class="overlay" id="overlay"></div>
+
+  <div id="popup" class="popup">
+    <h2>Information</h2>
+    <p>The list on the left represents a sequence of amino acids forming a peptide. The graphs on the right represent simulated mass spectrometry data from that peptide. Rearranging the peptide changes the simulated masses shown in the "Current Masses" graph. Based on the masses shown in the "Goal Masses" graph, reorder the "Current" amino acids to match the peptide. When an individual mass frequency is correct, it will appear green. Hover over the bars to get the combined masses. </p>
+    <p>Each mass is a peptide fragment. The fragments range in length from dipeptides (length 2) to the entire peptide. All fragments include either the C-terminus, N-terminus, or both if they represent the whole peptide. However, without sequencing the peptide, one cannot know if a fragment contains the C-terminus or N-terminus. </p>
+    <p>By clicking on a mass-to-charge ratio bar, the GUI highlights the amino acids that represent the fragment used to generate that bar. If the fragment is in the correct order and aligns with the goal peptide, the amino acids representing the fragment are highlighted green. Otherwise, they are red. Click the current peptide bars to know how many amino acids are in the fragment and if it contains the C- or N-terminus. Click the goal bars to know what the order of amino acids needs to be to match. </p>
+    <div style="text-align: center;">
+      <span class="close">Close</span>
+    </div>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
   <script src="peptidesequencingGUI/script.js"></script>
-</body> 
+  <script>
+    const overlay = document.getElementById('overlay');
+    const popup = document.getElementById('popup');
+
+    document.getElementById('helpBtn').addEventListener('click', function() {
+      overlay.style.display = 'block';
+      popup.style.display = 'block';
+    });
+
+    document.querySelector('.close').addEventListener('click', function() {
+      overlay.style.display = 'none';
+      popup.style.display = 'none';
+    });
+
+    overlay.addEventListener('click', function() {
+      overlay.style.display = 'none';
+      popup.style.display = 'none';
+    });
+
+    popup.addEventListener('click', function(event) {
+      event.stopPropagation();
+    });
+  </script>
+</body>
 </html>
