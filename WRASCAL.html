@@ -46,17 +46,55 @@
 						<div class="inner">
 							<h1>WRASCAL Front-end Design</h1>
 							<span class="image main" style="box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);">
-								<img src="images/WRASCAL.png" style="width: 1162px;" />
+								<img src="images/WRASCAL/WRASCAL.png" style="width: 1162px;" />
 							</span>
 							<table>
 								<tr>
 									<td>Design</td>
 									<td>
 										<p>For more information, see the <a href="https://github.com/WhitmanCSCapstone/WRASCAL">GitHub repository</a></p>
-										<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique.</p>
-										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel venenatis mauris vehicula hendrerit.</p>
-										<p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+										<p>The Whitman Repository of Accepted Stability Constants of Aqueous Ligands (WRASCAL) is a chemistry database designed by Professor Nathan Boland. The database allows users to enter and access information about ligands, metals, and the conditions necessary to form coordination compounds. Four computer science students extended this work in their year-long senior capstone project. They updated the front- and back-end to make the information entry and access easier. One of the students, Luke Samuels, worked on the front-end for the “New Entry Submission” entry page when he found an opportunity for HCD. New entries needed molecular formulas for metals and ligands, but the database could only parse this information in an unfamiliar syntax. The initial website had no information about how users should write molecular formulas or tools for users to write in a more familiar syntax.</p>
+										<p>Luke reached out to me, and we worked to redesign the front-end for the “New Entry Submission” page. This project had two sets of stakeholders: the chemists who would be using the database and the developers who would be extending the database. This project had to account for both by developing an intuitive interface that chemists could use to input molecular formulas while ensuring the implementation was modular, extendable, and readable. We enlisted the help of students in the Whitman chemistry and biology departments to test prototypes, and we developed an interface to make typing molecular formulas more familiar. Our final solution was a modular Vue component that allowed users to input molecular formulas in a familiar syntax using subscript coefficients and superscript charges. Because some chemists were already familiar with the WRASCAL syntax, we made the interface allow either syntax. The component contains an informational popup describing how users can input molecular formals and how WRASCAL would interpret the information. Lastly, the component automatically converts the formula between syntaxes from molecular formula to WRASCAL syntax and WRASCAL syntax to molecular formula.</p>
 									</td>
+								</tr>
+								<tr>
+									<td>Syntax</td>
+									<td>
+										<p>Professor Boland developed a new syntax for WRASCAL because it cannot handle subscripts or superscripts. The molecular formula syntax for a nitrate ion is NO3−, but WRASCAL needs it to be written as {{N,1},{O,3},-1}. A nitrate ion has one nitrogen, three oxygens, and a negative charge. In the molecular formula syntax (Figure 21A), the element frequency is represented by the subscript coefficient following the element. If an element has no subscript, this implies that it has a frequency of one. The molecular formula represents the charge by the superscript following the molecule. When present, the number goes before the charge (Helmenstine, 2022). Technically, the superscript charge should not follow the superscript coefficient but be stacked above it (Figure 21B). However, online resources such as LibreText Chemistry (2016b) often write them separately. In the WRASCAL syntax (Figure 21C), each element and its frequency are represented as a pair in curly brackets (e.g., {N,1}). A frequency of one is no longer implied and is explicitly stated. Each element-frequency pair is contained in a list, with the last element being the molecule's total charge. If there are multiple charges, they are summed.</p>
+										<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 640px;">
+											<div style="text-align: center;">
+												<img src="images/WRASCAL/C.png" style="max-width: 100%;" />
+												<p style="margin: 0 auto;">Figure B</p>
+											</div>
+											<div style="text-align: center;">
+												<img src="images/WRASCAL/B.png" style="max-width: 100%;" />
+												<p style="margin: 0 auto;">Figure C</p>
+											</div>
+											<div style="text-align: center;">
+												<img src="images/WRASCAL/C.png" style="max-width: 100%;" />
+												<p style="margin: 0 auto;">Figure D</p>
+											</div>
+										</div>
+										<p> </p>
+									</td>
+								</tr>
+								<tr>
+									<td>Semiotics</td>
+									<td>
+										<p>This project heavily relied on semiotics. Early in the process, we decided to take inspiration from existing designs. We identified that the WRASCAL syntax was ineffective because it relied on the user knowing how to interpret it. Instead, we wanted to implement an interface that would reference a user’s preexisting knowledge and increase the number of common signs in the implementation.</p>
+										<p>Another central theme of my design process is relying on preexisting knowledge. Reinventing the process of interacting with a component often increases its complexity. By interacting with similar interfaces over time, users develop a common understanding for interpreting and interacting with shared components. This is semiotics, the study of signs (Encyclopedia Britannica, 2018). Signs are useful because they provide a literal expression of meaning (Levanier, 2021), but they can also reference a community's collective understanding of how they should interact with a component (Underwood, 2019). The typology of signs is categorized by how it denotes its referent and is categorized into icons, indexes, and symbols.</p>
+										<p>Designers often reuse and combine common signs in their work, making interfaces less complex by reducing the amount of learning and interpreting users must do. Effective signs can instantly communicate complex ideas, transcending cultural and linguistic barriers (Dyess, 2023). By utilizing common signs, designers reduce the amount of explanatory information needed in a project. Designers can also develop novel icons so long as they effectively communicate the necessary information. </p>
+									</td>
+								</tr>
+								<tr>
+									<td>References</td>
+									<td style="text-indent: -2.5em; padding-left: 6.8em;">
+										<p>Encyclopedia Britannica. (2018). Semiotics. In Encyclopædia Britannica. <a href="https://www.britannica.com/science/semiotics">https://www.britannica.com/science/semiotics</a></p>
+										<p>Dyess, C. (2023, July 25). Semiotics: The Unspoken Language of Graphic Design. Medium. <a href="https://dyessdesign.medium.com/semiotics-the-unspoken-language-of-graphic-design-592db4f6c226">https://dyessdesign.medium.com/semiotics-the-unspoken-language-of-graphic-design-592db4f6c226</a></p>
+										<p>Levanier, J. (2021, March 2). The power of using symbolism in design. 99designs. <a href="https://99designs.com/blog/design-history-movements/symbolism-design/">https://99designs.com/blog/design-history-movements/symbolism-design/</a></p>
+										<p>Underwood, M. (2019, July 31). semiotics. Www.cs.princeton.edu. <a href="https://www.cs.princeton.edu/~chazelle/courses/BIB/semio1.html#icons">https://www.cs.princeton.edu/~chazelle/courses/BIB/semio1.html#icons</a></p>
+									</td>
+
 								</tr>
 							</table>
 						</div>
