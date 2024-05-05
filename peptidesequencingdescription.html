@@ -50,12 +50,45 @@
 							</span>
 							<table>
 								<tr>
-									<td>Design</td>
+									<td>Overview</td>
 									<td>
 										<p><a href="peptidesequencingGUI.html">Link to the implementation</a></p>
-										<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique.</p>
-										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel venenatis mauris vehicula hendrerit.</p>
-										<p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+										<p>This project is an extension of the computational biology research I contributed to under Professor Matthew Tien. One of the first projects I worked on was a novel approach to peptide sequencing. Proteomics (the large-scale study of peptides and proteins) is an increasingly powerful and indispensable technology in molecular cell biology (Pandey and Mann, 2000). The foundational technology in mass-spectrometry-based proteomics is peptide sequencing. However, it is often not well understood (Steen and Mann, 2004). Professor Tien was teaching his Intro to Comp Bio (BIOL-250) class about mass spectrometry, the algorithms used, and how to interpret the data. However, he predicted his students would struggle to understand peptide sequencing and mass spectrometry data. This led Professor Tien and me to create the problem statement: how might we develop a tool that helps students in his Intro to Comp Bio (BIOL-250) class understand and interpret peptide sequencing, mass spectrometry, and its data?</p>
+										<p>Solving this problem statement involved three phases: (i) working with Professor Tien and adhering to HCD principles to develop the prototype teaching tool; (ii) presenting the tool in his class, demonstrating it, and helping students use it; and (iii) using feedback and observations from Professor Tien and his students to iteratively redesign the teaching tool’s design for future use. In this design brief, I overview the design process I used throughout these steps and how I applied HCD and Design Thinking principles in this project.</p>
+									</td>
+								</tr>
+								<tr>
+									<td style="white-space: nowrap;">Final Design</td>
+									<td>
+										<p>The final design is an online graphical user interface (GUI) that visually represents both a random peptide and the simulated mass spectrometry output (Figure A).</p>
+										<div style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 20px; max-width: 640px;">
+											<div style="text-align: center;">
+												<img src="images/peptide_gui_desc/A.png" style="max-width: 50%;" />
+												<p style="margin: 0 auto;">Figure A</p>
+											</div>
+										</div>
+
+										<p>The random peptide is represented by a vertical array of amino acids and their masses (left). These can be dragged and dropped to rearrange their order. Users are given two spectrum outputs (right), which are generated based on the “Current” and “Goal” peptides. By rearranging the order of the amino acids, the “Current Masses” spectrum dynamically responds, helping students understand the relationship between the peptide and mass spectrometry data. The “Goal Masses” are generated based on a hidden “Goal” peptide. When a simulated “current” mass aligns with a simulated “goal” mass, it turns from red to green. When the peptides match, all the masses in the current spectrum turn green.</p>
+										<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 640px;">
+											<div style="text-align: center;">
+												<img src="images/peptide_gui_desc/B.png" style="max-width: 100%;" />
+												<p style="margin: 0 auto;">Figure B</p>
+											</div>
+											<div style="text-align: center;">
+												<img src="images/peptide_gui_desc/C.png" style="max-width: 100%;" />
+												<p style="margin: 0 auto;">Figure C</p>
+											</div>
+											<div style="text-align: center;">
+												<img src="images/peptide_gui_desc/D.png" style="max-width: 100%;" />
+												<p style="margin: 0 auto;">Figure D</p>
+											</div>
+											<div style="text-align: center;">
+												<img src="images/peptide_gui_desc/E.png" style="max-width: 100%;" />
+												<p style="margin: 0 auto;">Figure E</p>
+											</div>
+										</div>
+ 										
+										<p>Users can also hover over the bars, which show the summed amino acid masses of that fragment (Figure B). Clicking on a bar highlights the amino acid fragments that sum to the clicked frequency. This can be done for current or goal mass frequencies (Figure C/D). Clicking goal frequencies will highlight the amino acid fragment that needs to be in order to reconstruct the peptide (Figure C), which the user can use to sequence the peptide (Figure D). The graphical representations on the right represent the relative abundance as a function of the mass-to-charge ratio generated from simulating mass spectrometry on the peptide.</p>
 									</td>
 								</tr>
 							</table>
