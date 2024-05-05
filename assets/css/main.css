@@ -1976,7 +1976,8 @@ div#left-box #reset-btn {
 	ul {
 		list-style: disc;
 		margin: 0 0 2em 0;
-		padding-left: 1em;
+		padding-left: 2em;
+		margin-right:100px; 
 	}
 
 		ul li {
