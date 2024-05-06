@@ -629,11 +629,10 @@ document.addEventListener("DOMContentLoaded", function() {
     // Initialize the graph with axes and bars
     initializeGraph(GLOBAL_CURRENT_MASSES, GLOBAL_GOAL_MASSES, current_sumMap, goal_sumMap);
 
-
-    // sets the graph height to 687px. The local version was correct, but without this, GitHub pages version set it to 774px
-    var graphContainer = document.querySelector('.graph');
+    // sets the graph height to 687.6px. The local version was correct, but without this, GitHub pages version set it to 774px
+    // Coult set height to document.querySelector('.sortable-list'), but this has a rounding bug: 688px vs 687.6px
     function setGraphHeight() {
-        graphContainer.style.height = '687px';
+        document.querySelector('.graph').style.height = '687.6px';
     }
     setGraphHeight();
     window.addEventListener('resize', setGraphHeight);
