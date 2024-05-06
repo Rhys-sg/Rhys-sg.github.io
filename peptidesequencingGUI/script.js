@@ -27,9 +27,13 @@ const goal_y2 = current_y2 + y_axis_height + graphMargin;
 const upperGraphContainer = document.querySelector('.upperGraph');
 const lowerGraphContainer = document.querySelector('.lowerGraph');
 
-// Create SVG elements for upper and lower graphs
+// After creating the SVG elements for upper and lower graphs
 const upperGraphSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 const lowerGraphSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+
+// Add a margin below the SVG elements
+upperGraphSvg.style.marginBottom = "20px"; // adjust the value as needed
+lowerGraphSvg.style.marginBottom = "20px"; // adjust the value as needed
 
 // Define SVG width and height
 const inner_svgWidth = upperGraphContainer.clientWidth;
@@ -121,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // ---------------------------------------------------------------------------------------- //
 
     // Initialize amino acid map
-    const amino_acids = new Map([
+    const unrounded_amino_acids = new Map([
       ['A', 71.03711], ['C', 103.00919], ['D', 115.02694],
       ['E', 129.04259], ['F', 147.06841], ['G', 57.02146],
       ['H', 137.05891], ['I', 113.08406], ['K', 128.09496],
@@ -131,24 +135,20 @@ document.addEventListener("DOMContentLoaded", function() {
       ['W', 186.07931], ['Y', 163.06333]
     ]);
 
-  
-    // // Function to generate a random list of amino acid names
-    // function getgoal_peptide() {
-    //   let names = [...amino_acids.keys()];
-    //   let goal_peptide = [];
-  
-    //   for (let i = 0; i < AMINO_ACID_COUNT; i++) {
-    //     let randint = Math.floor(Math.random() * names.length)
-    //     goal_peptide.push(names[randint]);
-    //   }
-      
-    //   return goal_peptide;
-    // }
+    const amino_acids = new Map([
+        ['A', 71.037], ['C', 103.009], ['D', 115.027],
+        ['E', 129.043], ['F', 147.068], ['G', 57.021],
+        ['H', 137.059], ['I', 113.084], ['K', 128.095],
+        ['L', 113.084], ['M', 131.040], ['N', 114.043],
+        ['P', 97.053], ['Q', 128.059], ['R', 156.101],
+        ['S', 87.032], ['T', 101.048], ['V', 99.068],
+        ['W', 186.079], ['Y', 163.063]
+    ]);
 
 
     // Function to generate a random list of amino acid names without repeating amino acids
     function getgoal_peptide() {
-        nonrandom = ["ISGCHK", "LARSKF", "TSADFP", "VKDMHE", "TWRNGP", "DVTLKF", "FQSHVL", "PVYAWM", "GVIPYE", "YSPQLW", "RWNGTS", "PLQHYN"]
+        nonrandom = ["ISGCHK", "TSADFP", "VKDMHE", "TWRNGP", "DVTLKF", "FQSHVL", "PVYAWM", "GVIPYE", "YSPQLW", "RWNGTS", "PLQHYN"]
 
         let names = [...amino_acids.keys()];
         let goal_peptide = [];
@@ -378,43 +378,86 @@ document.addEventListener("DOMContentLoaded", function() {
     // ---------------------------------------------------------------------------------------- //
 
     
-    function createAxis(lowerGraphSvg, upperGraphSvg) {
+    function createAxis(lowerGraphSvg, upperGraphSvg, numTicks, maxTick) {
 
-        // draw axis for the current masses
+        // draw Y axis, X axis, ticks, and axis labels for the current masses
         _createAxis(upperGraphSvg, 1, 1, 1, inner_svgHeight, "2");
         _createAxis(upperGraphSvg, 1, inner_svgHeight, inner_svgWidth, inner_svgHeight, "2");
-
-        // draw axis for the goal masses
+        _createTickMarks(upperGraphSvg, 1, inner_svgHeight, inner_svgWidth, inner_svgHeight, "2", numTicks, maxTick);
+    
+        // draw Y axis, X axis, ticks, and axis labels for the goal masses
         _createAxis(lowerGraphSvg, 1, 1, 1, inner_svgHeight, "2");
         _createAxis(lowerGraphSvg, 1, inner_svgHeight, inner_svgWidth, inner_svgHeight, "2");
+        _createTickMarks(lowerGraphSvg, 1, inner_svgHeight, inner_svgWidth, inner_svgHeight, "2", numTicks, maxTick);
     }
     
     // Helper function to create an axis line
-    function _createAxis(svg, x1, y1, x2, y2, thinkness) {
+    function _createAxis(svg, x1, y1, x2, y2, thickness) {
         const axis = document.createElementNS("http://www.w3.org/2000/svg", "line");
         axis.setAttribute("x1", x1);
         axis.setAttribute("y1", y1); 
         axis.setAttribute("x2", x2); 
         axis.setAttribute("y2", y2);
         axis.setAttribute("stroke", "black");
-        axis.setAttribute("stroke-width", thinkness);
+        axis.setAttribute("stroke-width", thickness);
         svg.appendChild(axis);
     }
 
+    // Helper funtion to create tick marks
+    function _createTickMarks(svg, x1, y1, x2, y2, thickness, numTicks, maxTick) {
+        const deltaX = (x2 - x1) / (numTicks - 1);
+        const deltaY = (y2 - y1) / (numTicks - 1);
+    
+        // Create ticks
+        for (let i = 1; i < numTicks; i++) {
+            const tickX = x1 + deltaX * i;
+            const tickY = y1 + deltaY * i;
+            const tick = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            tick.setAttribute("x1", tickX);
+            tick.setAttribute("y1", tickY);
+            tick.setAttribute("x2", tickX);
+            tick.setAttribute("y2", tickY + 5); // Adjusts the tick length
+            tick.setAttribute("stroke", "black");
+            tick.setAttribute("stroke-width", thickness);
+            svg.appendChild(tick);
+        }
+    
+        // Add text labels below ticks
+        for (let i = 1; i < numTicks; i++) {
+            const tickX = x1 + deltaX * i;
+            const tickY = y1 + deltaY * i;
+    
+            const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            text.setAttribute("x", tickX);
+            text.setAttribute("y", tickY + 15);
+            text.setAttribute("text-anchor", "middle");
+            text.setAttribute("alignment-baseline", "middle");
+            text.setAttribute("fill", "black");
+            const value = Math.round((i * maxTick) / (numTicks - 1));
+            text.textContent = value;
+            svg.appendChild(text);
+        }
+    }
+    
+
     // Function to create bars with labels
     function createBars(svg, current_masses, other_masses, color1, color2, sumMap, goal, animation=true){
-        const barWidth = 7;
-        const distance_at_end = 50;
-        const label_height_difference = 25;
-        const maxValue = Math.max(...current_masses.concat(other_masses));
-        const width = inner_svgWidth - distance_at_end;
-        const seed = generateSeed(current_masses);
+        let barWidth = 7;
+        let distance_at_end = 50;
+        let line_spacing = 3;
+        let maxValue = current_masses[current_masses.length - 1];
+        let width = inner_svgWidth - distance_at_end;
+        let seed = generateSeed(current_masses);
+        let heights = [];
+
+        for (let i = 0; i < current_masses.length; i++) {
+            heights.push(pseudoRandomIntInRange(Math.floor(current_masses[i]) + seed, 100, 180));
+        }
 
         // Iterate over the first values array to create bars with color1 and labels
         for (let i = 0; i < current_masses.length; i++) {
-            const height = pseudoRandomIntInRange(Math.floor(current_masses[i]) + seed, 100, 200);
-            const y = inner_svgHeight;
-            const x = current_masses[i] / maxValue * width;
+            let y = inner_svgHeight-1;
+            let x = current_masses[i] / maxValue * width;
     
             // Create the bar rectangle
             const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
@@ -424,74 +467,53 @@ document.addEventListener("DOMContentLoaded", function() {
             rect.setAttribute("height", 0);
             rect.setAttribute("fill", current_masses[i] !== other_masses[i] ? color1 : color2);
 
-    
             // Create the text element
             const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            text.setAttribute("x", x);
-            text.setAttribute("y", y + label_height_difference);
+            text.setAttribute("x", x + barWidth / 2);
+            text.setAttribute("y", y - 195);
             text.setAttribute("font-size", "16");
             text.setAttribute("text-anchor", "middle");
             text.textContent = current_masses[i];
             text.style.visibility = "hidden";
     
+            // Create the line element between rectangle and text
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            line.setAttribute("x1", x + barWidth / 2);
+            line.setAttribute("y1", y - heights[i] - line_spacing);
+            line.setAttribute("x2", x + barWidth / 2);
+            line.setAttribute("y2", y - 195 + line_spacing);
+            line.setAttribute("stroke", "grey");
+            line.setAttribute("stroke-width", "1");
+            line.style.visibility = "hidden";
+
             // Event listeners to show/hide text on hover
             rect.addEventListener("mouseover", function() {
                 text.style.visibility = "visible";
+                line.style.visibility = "visible";
             });
-    
+
             rect.addEventListener("mouseout", function() {
                 text.style.visibility = "hidden";
+                line.style.visibility = "hidden";
                 changeAllItemColor(current_masses[i], sumMap, "grey", "1px");
-                
             });
 
             // Event listener to highlight amino acids
             rect.addEventListener("click", function() {
-
-                // var current_items = findItems(current_masses[i], sumMap);
-                // var other_items = findItems(other_masses[i], sumMap);
-                
-                // let ids = []
-                // for (let i = 0; i < current_items.length; i++) {
-                //     ids.push(current_items[i]["id"])
-                // }
-
-                if (goal) {
-                    changeAllItemColor(current_masses[i], sumMap,  current_masses[i] !== other_masses[i] ? "red" : "green", "2px");
-                } else {
-                    changeAllItemColor(current_masses[i], sumMap,  current_masses[i] !== other_masses[i] ? color1 : color2, "2px");
-                }                
+                changeAllItemColor(current_masses[i], sumMap,  current_masses[i] !== other_masses[i] ? "red" : "green", "2px");
             });
 
-            // Append rect and text elements to the SVG
+            // Append rect, text, and line elements to the SVG
             svg.appendChild(rect);
             svg.appendChild(text);
-            
+            svg.appendChild(line);
+
             if (animation) {
-                animateBar(rect, y, height, i);
+                animateBar(rect, y, heights[i], i);
             } else {
-                drawBar(rect, y, height, i);
+                drawBar(rect, y, heights[i], i);
             }
         }
-    }
-    
-    function findItems(mass, sumMap){
-        let cells = [];
-        sumMap.forEach(function(list) {
-            // Check if the mass is equal to the sum of the list
-            if (list.reduce((partialSum, a) => partialSum + a, 0).toFixed(5) == mass) {
-                // Iterate over the list to change the color of repeating masses
-                list.forEach(function(mass) {
-                    cells.push(mass_li.get(mass)[0]);
-                });
-            }
-        });
-        return cells;
-    }
-
-    function changeItemColor(item, color1, width) {
-        item.style.borderColor = color1;
-        item.style.borderWidth = width;
     }
 
     // Function to change the color of the amino acid list items
@@ -567,7 +589,10 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Initialize the graph with axes and bars
     function initializeGraph(current_masses, goal_masses, current_sumMap, goal_sumMap) {
-        createAxis(lowerGraphSvg, upperGraphSvg);
+        maxTick = Math.ceil(goal_masses[goal_masses.length - 1] / 50) * 50;
+        numTick = (maxTick / 50) + 1;
+
+        createAxis(lowerGraphSvg, upperGraphSvg, numTick, maxTick);
         createBars(upperGraphSvg, current_masses, goal_masses, "red", "green", current_sumMap, false);
         createBars(lowerGraphSvg, goal_masses, current_masses, "black", "black", goal_sumMap, true);
     }

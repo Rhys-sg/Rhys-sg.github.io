@@ -94,7 +94,7 @@ body {
   align-items: center;
   border-radius: 5px;
   padding: 10px 13px;
-  margin-bottom: 11px;
+  margin-bottom: 15px;
   box-shadow: 0 2px 4px #0000000f;
   border: 1px solid grey;
   justify-content: space-between;
@@ -136,7 +136,6 @@ body {
   padding: 50px 50px; /* vertical, horizontal */
 }
 
-
 .upperGraph, .lowerGraph {
   width: 700px;
   height: 225px;
@@ -152,6 +151,18 @@ body {
   font-size: 22px;
   margin-bottom: 0;
   text-align: center; 
+}
+
+.x-label, .y-label  {
+  position: absolute;
+  white-space: nowrap;
+  z-index: 1;
+  color: darkgrey;
+}
+
+.y-label {
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
 }
 
 .custom-btn {
