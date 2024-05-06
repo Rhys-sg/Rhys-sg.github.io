@@ -45,16 +45,12 @@ body {
 
 .content {
   display: flex;
+  height: 678px;
 }
 
 .container {
   display: flex;
   align-items: center;
-}
-
-.sortable-list {
-  width: 200px;
-  padding: 25px;
 }
 
 * {
@@ -62,11 +58,6 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
-}
-
-.container {
-  display: flex;
-  align-items: center;
 }
 
 body {
@@ -82,7 +73,7 @@ body {
   padding: 25px;
   background: #fff;
   border-radius: 7px;
-  padding: 30px 25px 20px;
+  padding: 30px 20px;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
