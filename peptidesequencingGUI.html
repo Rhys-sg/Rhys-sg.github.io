@@ -42,28 +42,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
   <script src="peptidesequencingGUI/script.js"></script>
-  <script>
-    const overlay = document.getElementById('overlay');
-    const popup = document.getElementById('popup');
-
-    document.getElementById('helpBtn').addEventListener('click', function() {
-      overlay.style.display = 'block';
-      popup.style.display = 'block';
-    });
-
-    document.querySelector('.close').addEventListener('click', function() {
-      overlay.style.display = 'none';
-      popup.style.display = 'none';
-    });
-
-    overlay.addEventListener('click', function() {
-      overlay.style.display = 'none';
-      popup.style.display = 'none';
-    });
-
-    popup.addEventListener('click', function(event) {
-      event.stopPropagation();
-    });
-  </script>
+  <script src="peptidesequencingGUI/popup_script.js"></script>
 </body>
 </html>
