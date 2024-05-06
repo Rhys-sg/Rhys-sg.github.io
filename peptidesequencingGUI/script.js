@@ -636,6 +636,19 @@ document.addEventListener("DOMContentLoaded", function() {
         var height = window.getComputedStyle(document.querySelector('.sortable-list')).height;
         document.querySelector('.graph').style.height = "682.6px";
     };
+
+    // Get the graph container element
+    var graphContainer = document.querySelector('.graph');
+
+    // Function to set the height of the graph container to 678px
+    function setGraphHeight() {
+        // Set the height of the graph container to 678px
+        graphContainer.style.height = '682.6px';
+    }
+
+    // Call the function initially and on window resize
+    setGraphHeight();
+    window.addEventListener('resize', setGraphHeight);
 });
   
 
