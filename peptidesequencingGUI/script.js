@@ -169,13 +169,15 @@ document.addEventListener("DOMContentLoaded", function() {
         return goal_peptide;
       }
     
-
-  
-    // Function to shuffle an array
-    function shuffleArray(array) {
-      return array.sort(() => Math.random() - 0.5);
+    // Function to shuffle an array -- input can never be output
+    function shuffleArray(array1) {
+        let array2 = array1.slice();
+        for (let i = array2.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array2[i], array2[j]] = [array2[j], array2[i]];
+        }
+        return array2;
     }
-
   
     // Function to update the visual based on a list of amino acid names
     function initializateVisual(current_peptide) {
@@ -198,8 +200,7 @@ document.addEventListener("DOMContentLoaded", function() {
   
     // Get a random list of amino acid names, copy it, and shuffle the copy to create the visual list
     const goal_peptide = getgoal_peptide();
-    const current_peptide = [...goal_peptide];
-    shuffleArray(current_peptide);
+    const current_peptide = shuffleArray(goal_peptide);
 
   
     // Update the visual list
@@ -633,7 +634,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // sets the graph height to amino acid list height. The local version was correct, but without this, GitHub pages version set it to 774px
     window.onload = function() {
         var height = window.getComputedStyle(document.querySelector('.sortable-list')).height;
-        graphContainer.style.height = height;
+        document.querySelector('.graph').style.height = height;
     };
 });
   

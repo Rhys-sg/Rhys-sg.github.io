@@ -43,11 +43,6 @@ body {
   padding-left: 40px;
 }
 
-.content {
-  display: flex;
-  height: 678px;
-}
-
 .container {
   display: flex;
   align-items: center;
