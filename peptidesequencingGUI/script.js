@@ -443,7 +443,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Function to create bars with labels
     function createBars(svg, current_masses, other_masses, color1, color2, sumMap, goal, animation=true){
         let barWidth = 7;
-        let maxTick = Math.ceil(current_masses[current_masses.length - 1] / 50) * 50;
+        let maxTick = (Math.ceil(current_masses[current_masses.length - 1] / 50) + 1) * 50;
         let distance_at_end = maxTick - current_masses[current_masses.length - 1];
         let line_spacing = 3;
         let maxValue = current_masses[current_masses.length - 1];
@@ -629,13 +629,12 @@ document.addEventListener("DOMContentLoaded", function() {
     // Initialize the graph with axes and bars
     initializeGraph(GLOBAL_CURRENT_MASSES, GLOBAL_GOAL_MASSES, current_sumMap, goal_sumMap);
 
-    // sets the graph height to 687.6px. The local version was correct, but without this, GitHub pages version set it to 774px
-    // Coult set height to document.querySelector('.sortable-list'), but this has a rounding bug: 688px vs 687.6px
-    function setGraphHeight() {
-        document.querySelector('.graph').style.height = '687.6px';
-    }
-    setGraphHeight();
-    window.addEventListener('resize', setGraphHeight);
+
+    // sets the graph height to amino acid list height. The local version was correct, but without this, GitHub pages version set it to 774px
+    window.onload = function() {
+        var height = window.getComputedStyle(document.querySelector('.sortable-list')).height;
+        graphContainer.style.height = height;
+    };
 });
   
 
