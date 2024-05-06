@@ -634,7 +634,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // sets the graph height to amino acid list height. The local version was correct, but without this, GitHub pages version set it to 774px
     window.onload = function() {
         var height = window.getComputedStyle(document.querySelector('.sortable-list')).height;
-        document.querySelector('.graph').style.height = height;
+        document.querySelector('.graph').style.height = "682.6px";
     };
 });
   
