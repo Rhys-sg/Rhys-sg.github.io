@@ -631,6 +631,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     window.onload = function() {
         document.querySelector('.content').style.height = '678px';
+        document.querySelector('.container').style.height = '678px';
+        document.querySelector('.graph').style.height = '678px';
     };
 });
   
