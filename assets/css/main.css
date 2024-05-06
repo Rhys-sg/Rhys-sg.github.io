@@ -46,41 +46,43 @@ blockquote, q {
 		content: none;
 	}
 
+/* Table */
+
 table {
 	border-collapse: collapse;
 	width: 100%;
 }
 
-th, td {
-	padding: 8px;
-	text-align: left;
-}
+	th, td {
+		padding: 8px;
+		text-align: left;
+	}
 
-td {
-	padding-right: 80px;
-	padding-left: 80px;
-}
+	td {
+		padding-right: 80px;
+		padding-left: 80px;
+	}
 
-td:first-child {
-	font-weight: bold;
-}
+	td:first-child {
+		font-weight: bold;
+	}
 
-td p {
-	margin: 20; /* Remove default margin of <p> tag */
-}
+	td p {
+		margin: 20;
+	}
 
-td p {
-	margin-right:100px; 
-}
+	td p {
+		margin-right:100px; 
+	}
 
-body {
-	-webkit-text-size-adjust: none;
-}
+	body {
+		-webkit-text-size-adjust: none;
+	}
 
-mark {
-	background-color: transparent;
-	color: inherit;
-}
+	mark {
+		background-color: transparent;
+		color: inherit;
+	}
 
 input::-moz-focus-inner {
 	border: 0;
@@ -94,10 +96,6 @@ input, select, textarea {
 	appearance: none;
 }
 
-
-
-
-/* Newly Added */
 
 .container {
     display: flex;
@@ -163,10 +161,6 @@ div#left-box #reset-btn {
     height: 20px !important;
     margin-right: 10px;
 }
-
-
-
-
 
 
 /* Basic */
@@ -2468,72 +2462,42 @@ div#left-box #reset-btn {
 
 			}
 
-/* Table */
-
-	/* .table-wrapper {
-		-webkit-overflow-scrolling: touch;
-		overflow-x: auto;
-	}
-
-	table {
-		margin: 0 0 2em 0;
-		width: 100%;
-	}
-
-		table tbody tr {
-			border: solid 1px #c9c9c9;
-			border-left: 0;
-			border-right: 0;
+		.image.header {
+			display: block;
+			margin: 0 0 3em 0;
+			width: 100%;
+			box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add drop shadow */
 		}
-
-			table tbody tr:nth-child(2n + 1) {
-				background-color: rgba(144, 144, 144, 0.075);
+		
+			.image.header img {
+				width: 100%;
 			}
-
-		table td {
-			padding: 0.75em 0.75em;
-		}
-
-		table th {
-			font-size: 0.9em;
-			font-weight: 900;
-			padding: 0 0.75em 0.75em 0.75em;
-			text-align: left;
-		}
-
-		table thead {
-			border-bottom: solid 2px #c9c9c9;
-		}
-
-		table tfoot {
-			border-top: solid 2px #c9c9c9;
-		}
-
-		table.alt {
-			border-collapse: separate;
-		}
-
-			table.alt tbody tr td {
-				border: solid 1px #c9c9c9;
-				border-left-width: 0;
-				border-top-width: 0;
-			}
-
-				table.alt tbody tr td:first-child {
-					border-left-width: 1px;
+			
+			@media screen and (max-width: 736px) {
+				.image.header {
+					margin: 0 0 2em 0;
 				}
-
-			table.alt tbody tr:first-child td {
-				border-top-width: 1px;
 			}
 
-			table.alt thead {
-				border-bottom: 0;
-			}
+/* Profile Image */
 
-			table.alt tfoot {
-				border-top: 0;
-			} */
+.profile-image {
+    border-radius: 50%;
+    width: 225px;
+    height: 225px;
+    position: relative;
+    top: -200px;
+    left: 5%;
+    border: 8px solid rgba(255, 255, 255, 0.8);
+    background-color: #fff;
+}
+
+.profile-image img {
+    border-radius: 50%; 
+    display: block;
+    width: 100%;
+    height: 100%;
+}
 
 /* Button */
 
