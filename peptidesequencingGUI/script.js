@@ -629,25 +629,12 @@ document.addEventListener("DOMContentLoaded", function() {
     // Initialize the graph with axes and bars
     initializeGraph(GLOBAL_CURRENT_MASSES, GLOBAL_GOAL_MASSES, current_sumMap, goal_sumMap);
 
-    window.onload = function() {
-        document.querySelector('.content').style.height = '678px';
-        document.querySelector('.container').style.height = '678px';
-        document.querySelector('.graph').style.height = '678px';
-    };
 
-    // Get the graph container element
+    // sets the graph height to 687px. The local version was correct, but without this, GitHub pages version set it to 774px
     var graphContainer = document.querySelector('.graph');
-
-    // Function to set the height of the graph container to 678px
     function setGraphHeight() {
-        // Set the height of the graph container to 678px
         graphContainer.style.height = '687px';
     }
-
-    // Call the function initially
-    setGraphHeight();
-
-    // Call the function initially and on window resize
     setGraphHeight();
     window.addEventListener('resize', setGraphHeight);
 });
