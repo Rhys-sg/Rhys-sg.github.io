@@ -32,8 +32,8 @@ const upperGraphSvg = document.createElementNS("http://www.w3.org/2000/svg", "sv
 const lowerGraphSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 
 // Add a margin below the SVG elements
-upperGraphSvg.style.marginBottom = "20px"; // adjust the value as needed
-lowerGraphSvg.style.marginBottom = "20px"; // adjust the value as needed
+upperGraphSvg.style.marginBottom = "20px";
+lowerGraphSvg.style.marginBottom = "20px";
 
 // Define SVG width and height
 const inner_svgWidth = upperGraphContainer.clientWidth;
@@ -590,7 +590,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Initialize the graph with axes and bars
     function initializeGraph(current_masses, goal_masses, current_sumMap, goal_sumMap) {
-        maxTick = Math.ceil(goal_masses[goal_masses.length - 1] / 50) * 50;
+        maxTick = (Math.ceil(goal_masses[goal_masses.length - 1] / 50) + 1) * 50;
         numTick = (maxTick / 50) + 1;
 
         createAxis(lowerGraphSvg, upperGraphSvg, numTick, maxTick);
@@ -634,6 +634,22 @@ document.addEventListener("DOMContentLoaded", function() {
         document.querySelector('.container').style.height = '678px';
         document.querySelector('.graph').style.height = '678px';
     };
+
+    // Get the graph container element
+    var graphContainer = document.querySelector('.graph');
+
+    // Function to set the height of the graph container to 678px
+    function setGraphHeight() {
+        // Set the height of the graph container to 678px
+        graphContainer.style.height = '687px';
+    }
+
+    // Call the function initially
+    setGraphHeight();
+
+    // Call the function initially and on window resize
+    setGraphHeight();
+    window.addEventListener('resize', setGraphHeight);
 });
   
 
