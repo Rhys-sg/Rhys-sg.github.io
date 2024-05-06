@@ -64,6 +64,9 @@ const mass_li = new Map();
 // Global map to keep track of what mass corresponds to the sums
 const massMap = new Map();
 
+GLOBAL_CURRENT_MASSES = []
+GLOBAL_GOAL_MASSES = []
+
 document.addEventListener("DOMContentLoaded", function() {
 
     // ---------------------------------------------------------------------------------------- //
@@ -399,14 +402,14 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Function to create bars with labels
-    function createBars(svg, current_masses, other_masses, color1, color2, sumMap, goal){
+    function createBars(svg, current_masses, other_masses, color1, color2, sumMap, goal, animation=true){
         const barWidth = 7;
         const distance_at_end = 50;
         const label_height_difference = 25;
         const maxValue = Math.max(...current_masses.concat(other_masses));
         const width = inner_svgWidth - distance_at_end;
         const seed = generateSeed(current_masses);
-    
+
         // Iterate over the first values array to create bars with color1 and labels
         for (let i = 0; i < current_masses.length; i++) {
             const height = pseudoRandomIntInRange(Math.floor(current_masses[i]) + seed, 100, 200);
@@ -438,47 +441,69 @@ document.addEventListener("DOMContentLoaded", function() {
     
             rect.addEventListener("mouseout", function() {
                 text.style.visibility = "hidden";
-                changeItemColor(current_masses[i], sumMap, "grey", "grey", "1px")
+                changeAllItemColor(current_masses[i], sumMap, "grey", "1px");
                 
             });
 
             // Event listener to highlight amino acids
             rect.addEventListener("click", function() {
-                if (current_masses[i] === other_masses[i]) { 
-                    changeItemColor(current_masses[i], sumMap, "green", "orange","2px")
+
+                // var current_items = findItems(current_masses[i], sumMap);
+                // var other_items = findItems(other_masses[i], sumMap);
+                
+                // let ids = []
+                // for (let i = 0; i < current_items.length; i++) {
+                //     ids.push(current_items[i]["id"])
+                // }
+
+                if (goal) {
+                    changeAllItemColor(current_masses[i], sumMap,  current_masses[i] !== other_masses[i] ? "red" : "green", "2px");
                 } else {
-                    changeItemColor(current_masses[i], sumMap,  "red", "orange", "2px")
-                }
+                    changeAllItemColor(current_masses[i], sumMap,  current_masses[i] !== other_masses[i] ? color1 : color2, "2px");
+                }                
             });
 
-    
             // Append rect and text elements to the SVG
             svg.appendChild(rect);
             svg.appendChild(text);
-
-            drawBar(rect, y, height, i);
+            
+            if (animation) {
+                animateBar(rect, y, height, i);
+            } else {
+                drawBar(rect, y, height, i);
+            }
         }
     }
     
+    function findItems(mass, sumMap){
+        let cells = [];
+        sumMap.forEach(function(list) {
+            // Check if the mass is equal to the sum of the list
+            if (list.reduce((partialSum, a) => partialSum + a, 0).toFixed(5) == mass) {
+                // Iterate over the list to change the color of repeating masses
+                list.forEach(function(mass) {
+                    cells.push(mass_li.get(mass)[0]);
+                });
+            }
+        });
+        return cells;
+    }
+
+    function changeItemColor(item, color1, width) {
+        item.style.borderColor = color1;
+        item.style.borderWidth = width;
+    }
+
     // Function to change the color of the amino acid list items
-    function changeItemColor(mass, sumMap, color1, color2, width) {
+    function changeAllItemColor(mass, sumMap, color1, width) {
         // Iterate over the sumMap to find the mass
         sumMap.forEach(function(list) {
             // Check if the mass is equal to the sum of the list
             if (list.reduce((partialSum, a) => partialSum + a, 0).toFixed(5) == mass) {
                 // Iterate over the list to change the color of repeating masses
                 list.forEach(function(mass) {
-                    // Change the base color for the list items
-                    // if (mass_li.get(mass).length == 1) {
-                        mass_li.get(mass)[0].style.borderColor = color1;
-                        mass_li.get(mass)[0].style.borderWidth = width;
-                    //     return;
-                    // }
-                    // // Change the base color for the list items
-                    // for (let i = 0; i < mass_li.get(mass).length; i++) {
-                    //     mass_li.get(mass)[i].style.borderColor = color2;
-                    //     mass_li.get(mass)[i].style.borderWidth = width;
-                    // }
+                    mass_li.get(mass)[0].style.borderColor = color1;
+                    mass_li.get(mass)[0].style.borderWidth = width;
                 });
             }
         });
@@ -508,8 +533,17 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Animate the bar growth
-    function drawBar(rect, y , height, i) {
+    function animateBar(rect, y , height, i) {
         rect.style.transition = "y .35s, height .35s";
+        setTimeout(() => {
+            rect.setAttribute("y", y - height);
+            rect.setAttribute("height", height);
+        }, 100 * i);
+    }
+
+    // Draw bar without animation
+    function drawBar(rect, y , height, i) {
+        rect.style.transition = "y .0s, height .0s";
         setTimeout(() => {
             rect.setAttribute("y", y - height);
             rect.setAttribute("height", height);
@@ -540,29 +574,34 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Function to update the graph based on the new masses
     function updateGraph(aminoSequence) {
-        const [update_current_masses, current_sumMap] = generateSubpeptideMasses(aminoSequence.map(amino => amino_acids.get(amino)));
+        const [GLOBAL_CURRENT_MASSES, current_sumMap] = generateSubpeptideMasses(aminoSequence.map(amino => amino_acids.get(amino)));
         
-        // Clear existing bars
-        const bar_svgContainer = document.querySelector('.upperGraph');
-        const bars = bar_svgContainer.querySelectorAll('rect');
+        // Clear all existing bars
+        const cur_bar_svgContainer = document.querySelector('.upperGraph');
+        const cur_bars = cur_bar_svgContainer.querySelectorAll('rect');
 
-        for (let i = 0; i < bars.length; i++) {
-            undrawBar(bars[i], i);
+        const goal_bar_svgContainer = document.querySelector('.lowerGraph');
+        const goal_bars = goal_bar_svgContainer.querySelectorAll('rect');
+
+        for (let i = 0; i < cur_bars.length; i++) {
+            undrawBar(cur_bars[i], i);
+            undrawBar(goal_bars[i], i);
         }
 
         // Update the bars
-        createBars(upperGraphSvg, update_current_masses, goal_masses, "red", "green", current_sumMap, false);
+        createBars(upperGraphSvg, GLOBAL_CURRENT_MASSES, GLOBAL_GOAL_MASSES, "red", "green", current_sumMap, false);
+        createBars(lowerGraphSvg, GLOBAL_GOAL_MASSES, GLOBAL_CURRENT_MASSES, "black", "black", goal_sumMap, true, animation=false); 
     }
 
     const sortableListHeight = sortableList.offsetHeight;
     svgContainer.style.height = sortableListHeight + (AMINO_ACID_COUNT * 11) + 30 + 'px';
 
     // Generate the subpeptide masses for the current and goal peptides
-    var [current_masses, current_sumMap] = generateSubpeptideMasses(current_peptide.map(amino => amino_acids.get(amino)));
-    var [goal_masses, goal_sumMap] = generateSubpeptideMasses(goal_peptide.map(amino => amino_acids.get(amino)));
+    var [GLOBAL_CURRENT_MASSES, current_sumMap] = generateSubpeptideMasses(current_peptide.map(amino => amino_acids.get(amino)));
+    var [GLOBAL_GOAL_MASSES, goal_sumMap] = generateSubpeptideMasses(goal_peptide.map(amino => amino_acids.get(amino)));
 
     // Initialize the graph with axes and bars
-    initializeGraph(current_masses, goal_masses, current_sumMap, goal_sumMap);
+    initializeGraph(GLOBAL_CURRENT_MASSES, GLOBAL_GOAL_MASSES, current_sumMap, goal_sumMap);
 });
   
 
