@@ -443,7 +443,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // Function to create bars with labels
     function createBars(svg, current_masses, other_masses, color1, color2, sumMap, goal, animation=true){
         let barWidth = 7;
-        let distance_at_end = 50;
+        let maxTick = Math.ceil(current_masses[current_masses.length - 1] / 50) * 50;
+        let distance_at_end = maxTick - current_masses[current_masses.length - 1];
         let line_spacing = 3;
         let maxValue = current_masses[current_masses.length - 1];
         let width = inner_svgWidth - distance_at_end;
