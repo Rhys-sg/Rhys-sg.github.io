@@ -628,6 +628,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Initialize the graph with axes and bars
     initializeGraph(GLOBAL_CURRENT_MASSES, GLOBAL_GOAL_MASSES, current_sumMap, goal_sumMap);
+
+    window.onload = function() {
+        document.querySelector('.content').style.height = '678px';
+    };
 });
   
 
