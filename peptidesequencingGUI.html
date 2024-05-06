@@ -89,6 +89,12 @@
 <body>
   <div class="info">
     <h1>Peptide Sequencing Simulation</h1>
+    <p style="margin-bottom: 20px;">This is a teaching tool demonstrating the relationship between the order of amino acids in a peptide and the peptide’s mass spectrometry data. The list on the left represents a sequence of amino acids forming a peptide, and the graphs on the right represent simulated mass spectrometry data from that peptide. Rearranging the peptide changes the simulated masses shown in the "Current Masses" graph. Based on the masses shown in the "Goal Masses" graph, reorder the "Current" amino acids to match the peptide. </p>
+    <ul>
+      <li>Drag and drop an amino acid cell to rearrange the peptide.</li>
+      <li>Hover over the bars to get the combined masses.</li>
+      <li>Click a bar to highlight the fragment it corresponds to.</li>
+    </ul>
   </div>
   <button id="helpBtn" class="custom-btn"><i class="fas fa-question"></i></button>
   <div class="content">
@@ -107,9 +113,10 @@
 
   <div id="popup" class="popup">
     <h2>Information</h2>
-    <p>The list on the left represents a sequence of amino acids forming a peptide. The graphs on the right represent simulated mass spectrometry data from that peptide. Rearranging the peptide changes the simulated masses shown in the "Current Masses" graph. Based on the masses shown in the "Goal Masses" graph, reorder the "Current" amino acids to match the peptide. When an individual mass frequency is correct, it will appear green. Hover over the bars to get the combined masses. </p>
-    <p>Each mass is a peptide fragment. The fragments range in length from dipeptides (length 2) to the entire peptide. All fragments include either the C-terminus, N-terminus, or both if they represent the whole peptide. However, without sequencing the peptide, one cannot know if a fragment contains the C-terminus or N-terminus. </p>
-    <p>By clicking on a mass-to-charge ratio bar, the GUI highlights the amino acids that represent the fragment used to generate that bar. If the fragment is in the correct order and aligns with the goal peptide, the amino acids representing the fragment are highlighted green. Otherwise, they are red. Click the current peptide bars to know how many amino acids are in the fragment and if it contains the C- or N-terminus. Click the goal bars to know what the order of amino acids needs to be to match. </p>
+    <p>This is a teaching tool demonstrating the relationship between the order of amino acids in a peptide and the peptide’s mass spectrometry data. </p>
+    <p>The list on the left represents a sequence of amino acids forming a peptide, and the graphs on the right represent simulated mass spectrometry data from that peptide. Rearranging the peptide changes the simulated masses shown in the "Current Masses" graph. Based on the masses shown in the "Goal Masses" graph, reorder the "Current" amino acids to match the peptide. When an individual mass frequency is correct, it will appear green. Hover over the bars to get the combined masses. </p>
+    <p>Each mass is generated from a peptide fragment. The fragments range in length from dipeptides (length 2) to the entire peptide. All fragments include the C-terminus and/or N-terminus. </p>
+    <p>By clicking on a bar, the GUI highlights the amino acids that represent the fragment used to generate that bar. If the fragment is in the correct order and aligns with the goal peptide, the amino acids representing the fragment are highlighted green. Otherwise, they are red. Click the current peptide bars to know how many amino acids are in the fragment and if it contains the C- or N-terminus. Click the goal bars to know what the order of amino acids needs to be to match. </p>
     <div style="text-align: center;">
       <span class="close">Close</span>
     </div>

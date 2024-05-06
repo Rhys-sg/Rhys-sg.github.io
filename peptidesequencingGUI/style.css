@@ -32,6 +32,15 @@ body {
   margin-bottom: 0px;
 }
 
+.info ul {
+  font-size: 1.2em;
+  color: #818181;
+  text-align: justify;
+  line-height: 1.6;
+  margin-bottom: 0px;
+  padding-left: 40px;
+}
+
 .content {
   display: flex;
 }
