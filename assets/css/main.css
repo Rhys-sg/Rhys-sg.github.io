@@ -84,6 +84,13 @@ table {
 		color: inherit;
 	}
 
+/* References */
+
+.references {
+	text-indent: -2.5em;
+	padding-left: 6.8em;
+}
+
 input::-moz-focus-inner {
 	border: 0;
 	padding: 0;
