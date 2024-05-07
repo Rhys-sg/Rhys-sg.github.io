@@ -486,7 +486,13 @@ document.addEventListener("DOMContentLoaded", function() {
         for (let i = 0; i < current_masses.length; i++) {
             let y = inner_svgHeight - 1;
             let x = ((current_masses[i] / maxTick) * width) + margin - (barWidth/2);
-    
+            
+            // generate fragments
+            // let fragments = [];
+            // for (let j = 0; j < current_masses.length; j++) { 
+            //     fragments.push(pseudoRandomIntInRange(Math.floor(current_masses[i]) + seed, -20, 20));
+            // }
+
             // Create the bar rectangle
             const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
             rect.setAttribute("x", x);
