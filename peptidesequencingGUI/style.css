@@ -12,8 +12,8 @@ body {
 
 .info {
   position: relative;
-  padding-left: 235px;
-  padding-right: 235px;
+  padding-left: 285px;
+  padding-right: 285px;
   padding-bottom: 50px;
   margin-top: -20px;
 }
@@ -45,7 +45,7 @@ body {
 
 .container {
   display: flex;
-  align-items: center;
+  align-items: top;
 }
 
 * {
@@ -119,6 +119,7 @@ body {
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   flex-direction: column;
   margin-left: 40px;
+  margin-right: 20px;
   height: 678px;
   padding-top: 25px;
   padding-right: 0px;
@@ -143,12 +144,22 @@ body {
   text-align: center; 
 }
 
-.upperGraphSvg {
+.button-container {
+  background: #fff;
+  border-radius: 7px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   position: relative;
+  padding-top: 10px;
+  padding-right: 7px;
+  padding-bottom: 0px;
+  padding-left: 7px;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
 }
 
-.svg-container {
-  position: relative;
+.help-btn {
+  margin-bottom: 10px;
 }
 
 .custom-btn {
@@ -162,6 +173,7 @@ body {
   cursor: pointer;
   transition: background-color 0.3s;
   text-align: center;
+  position: relative;
 }
 
 .custom-btn:hover {

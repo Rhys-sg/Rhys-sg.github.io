@@ -612,13 +612,31 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     
     // Create and append the button to upperGraphSvg
-    function createHelpButton(){
-        let helpBtn = document.createElement("button");
-        helpBtn.setAttribute("id", "helpBtn");
-        helpBtn.setAttribute("class", "custom-btn");
-        helpBtn.innerHTML = '<i class="fas fa-question"></i>';
-        upperGraphSvg.appendChild(helpBtn);
+    function createHelpButton() {
+        // Create a container for the buttons
+        let buttonContainer = document.createElement("div");
+        buttonContainer.setAttribute("class", "button-container");
+    
+        // Create the first button
+        let helpBtn1 = document.createElement("button");
+        helpBtn1.setAttribute("id", "helpBtn1");
+        helpBtn1.setAttribute("class", "custom-btn help-btn");
+        helpBtn1.innerHTML = '<i class="fas fa-question"></i>';
+    
+        // Create the second button
+        let helpBtn2 = document.createElement("button");
+        helpBtn2.setAttribute("id", "helpBtn2");
+        helpBtn2.setAttribute("class", "custom-btn help-btn");
+        helpBtn2.innerHTML = '<i class="fas fa-cog"></i>';
+    
+        // Append both buttons to the container
+        buttonContainer.appendChild(helpBtn1);
+        buttonContainer.appendChild(helpBtn2);
+    
+        // Append the container to upperGraphSvg
+        upperGraphSvg.appendChild(buttonContainer);
     }
+    
 
     // Initialize the graph with axes and bars
     function initializeGraph(current_masses, goal_masses, current_sumMap, goal_sumMap) {
