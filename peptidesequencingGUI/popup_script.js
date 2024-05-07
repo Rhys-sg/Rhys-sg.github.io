@@ -1,21 +1,47 @@
+// used for all popups
 const overlay = document.getElementById('overlay');
-const popup = document.getElementById('popup');
+
+// Help "?" popup
+const HelpPopUp = document.getElementById('HelpPopUp');
 
 document.getElementById('helpBtn').addEventListener('click', function() {
     overlay.style.display = 'block';
-    popup.style.display = 'block';
+    HelpPopUp.style.display = 'block';
 });
 
 document.querySelector('.close').addEventListener('click', function() {
     overlay.style.display = 'none';
-    popup.style.display = 'none';
+    HelpPopUp.style.display = 'none';
 });
 
 overlay.addEventListener('click', function() {
     overlay.style.display = 'none';
-    popup.style.display = 'none';
+    HelpPopUp.style.display = 'none';
 });
 
-popup.addEventListener('click', function(event) {
+HelpPopUp.addEventListener('click', function(event) {
+    event.stopPropagation();
+});
+
+
+// Settings popup
+const SettingsPopUp = document.getElementById('SettingsPopUp');
+
+document.getElementById('settingBtn').addEventListener('click', function() {
+    overlay.style.display = 'block';
+    SettingsPopUp.style.display = 'block';
+});
+
+document.querySelector('.close').addEventListener('click', function() {
+    overlay.style.display = 'none';
+    SettingsPopUp.style.display = 'none';
+});
+
+overlay.addEventListener('click', function() {
+    overlay.style.display = 'none';
+    SettingsPopUp.style.display = 'none';
+});
+
+SettingsPopUp.addEventListener('click', function(event) {
     event.stopPropagation();
 });
