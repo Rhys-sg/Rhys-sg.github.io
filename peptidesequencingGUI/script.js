@@ -379,21 +379,30 @@ document.addEventListener("DOMContentLoaded", function() {
     // ---------------------------------------------------------------------------------------- //
 
     
-    function createAxis(lowerGraphSvg, upperGraphSvg, numTicks, maxTick) {
+    function createAxis(lowerGraphSvg, upperGraphSvg, numTicks, maxTick, margin) {
+        // draw Y axis for current, goal
+        createAxisLine(upperGraphSvg, margin, 1, margin, inner_svgHeight, "2");
+        createAxisLine(lowerGraphSvg, margin, 1, margin, inner_svgHeight, "2");
 
-        // draw Y axis, X axis, ticks, and axis labels for the current masses
-        _createAxis(upperGraphSvg, 1, 1, 1, inner_svgHeight, "2");
-        _createAxis(upperGraphSvg, 1, inner_svgHeight, inner_svgWidth, inner_svgHeight, "2");
-        _createTickMarks(upperGraphSvg, 1, inner_svgHeight, inner_svgWidth, inner_svgHeight, "2", numTicks, maxTick);
-    
-        // draw Y axis, X axis, ticks, and axis labels for the goal masses
-        _createAxis(lowerGraphSvg, 1, 1, 1, inner_svgHeight, "2");
-        _createAxis(lowerGraphSvg, 1, inner_svgHeight, inner_svgWidth, inner_svgHeight, "2");
-        _createTickMarks(lowerGraphSvg, 1, inner_svgHeight, inner_svgWidth, inner_svgHeight, "2", numTicks, maxTick);
-    }
+        // draw X axis for current, goal
+        createAxisLine(upperGraphSvg, margin, inner_svgHeight, inner_svgWidth-margin, inner_svgHeight, "2");
+        createAxisLine(lowerGraphSvg, margin, inner_svgHeight, inner_svgWidth-margin, inner_svgHeight, "2");
+
+        // add X axis labels for current, goal
+        createAxisLabel(upperGraphSvg, "Mass-to-Charge Ratio", (inner_svgWidth / 2), (inner_svgHeight + 15 + margin/2), "middle", "middle", false);
+        createAxisLabel(lowerGraphSvg, "Mass-to-Charge Ratio", (inner_svgWidth / 2), (inner_svgHeight + 15 + margin/2), "middle", "middle", false);
+        
+        // add Y axis labels for current, goal
+        createAxisLabel(upperGraphSvg, "Frequency", margin/2, (inner_svgHeight / 2), "middle", "middle", true);
+        createAxisLabel(lowerGraphSvg, "Frequency", margin/2, (inner_svgHeight / 2), "middle", "middle", true);
+
+        // draw axis ticks for current, goal (only applied to X)
+        createTickMarks(upperGraphSvg, margin, inner_svgHeight, inner_svgWidth - margin, inner_svgHeight, "2", numTicks, maxTick);
+        createTickMarks(lowerGraphSvg, margin, inner_svgHeight, inner_svgWidth - margin, inner_svgHeight, "2", numTicks, maxTick);
+   }
     
     // Helper function to create an axis line
-    function _createAxis(svg, x1, y1, x2, y2, thickness) {
+    function createAxisLine(svg, x1, y1, x2, y2, thickness) {
         const axis = document.createElementNS("http://www.w3.org/2000/svg", "line");
         axis.setAttribute("x1", x1);
         axis.setAttribute("y1", y1); 
@@ -405,12 +414,12 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Helper funtion to create tick marks
-    function _createTickMarks(svg, x1, y1, x2, y2, thickness, numTicks, maxTick) {
+    function createTickMarks(svg, x1, y1, x2, y2, thickness, numTicks, maxTick) {
         const deltaX = (x2 - x1) / (numTicks - 1);
         const deltaY = (y2 - y1) / (numTicks - 1);
     
         // Create ticks
-        for (let i = 1; i < numTicks; i++) {
+        for (let i = 0; i < numTicks; i++) {
             const tickX = x1 + deltaX * i;
             const tickY = y1 + deltaY * i;
             const tick = document.createElementNS("http://www.w3.org/2000/svg", "line");
@@ -424,7 +433,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     
         // Add text labels below ticks
-        for (let i = 1; i < numTicks; i++) {
+        for (let i = 0; i < numTicks; i++) {
             const tickX = x1 + deltaX * i;
             const tickY = y1 + deltaY * i;
     
@@ -439,16 +448,29 @@ document.addEventListener("DOMContentLoaded", function() {
             svg.appendChild(text);
         }
     }
+
+    // Helper function to create an axis label
+    function createAxisLabel(svg, label, x, y, textAnchor, alignmentBaseline, vertical) {
+        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        text.setAttribute("x", x);
+        text.setAttribute("y", y);
+        text.setAttribute("text-anchor", textAnchor);
+        text.setAttribute("alignment-baseline", alignmentBaseline);
+        text.setAttribute("fill", "darkgrey");
+        if (vertical) {
+            text.setAttribute("transform", "rotate(-90 " + x + "," + y + ")");
+        }
+        text.textContent = label;
+        svg.appendChild(text);
+    }
     
 
     // Function to create bars with labels
-    function createBars(svg, current_masses, other_masses, color1, color2, sumMap, goal, animation=true){
+    function createBars(svg, current_masses, other_masses, color1, color2, sumMap, margin, animation=true){
         let barWidth = 7;
         let maxTick = (Math.ceil(current_masses[current_masses.length - 1] / 50) + 1) * 50;
-        let distance_at_end = maxTick - current_masses[current_masses.length - 1];
         let line_spacing = 3;
-        let maxValue = current_masses[current_masses.length - 1];
-        let width = inner_svgWidth - distance_at_end;
+        let width = inner_svgWidth - (margin * 2);
         let seed = generateSeed(current_masses);
         let heights = [];
 
@@ -458,8 +480,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Iterate over the first values array to create bars with color1 and labels
         for (let i = 0; i < current_masses.length; i++) {
-            let y = inner_svgHeight-1;
-            let x = current_masses[i] / maxValue * width;
+            let y = inner_svgHeight - 1;
+            let x = ((current_masses[i] / maxTick) * width) + margin - (barWidth/2);
     
             // Create the bar rectangle
             const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
@@ -589,14 +611,27 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
     
+    // Create and append the button to upperGraphSvg
+    function createHelpButton(){
+        let helpBtn = document.createElement("button");
+        helpBtn.setAttribute("id", "helpBtn");
+        helpBtn.setAttribute("class", "custom-btn");
+        helpBtn.innerHTML = '<i class="fas fa-question"></i>';
+        upperGraphSvg.appendChild(helpBtn);
+    }
+
     // Initialize the graph with axes and bars
     function initializeGraph(current_masses, goal_masses, current_sumMap, goal_sumMap) {
-        maxTick = (Math.ceil(goal_masses[goal_masses.length - 1] / 50) + 1) * 50;
-        numTick = (maxTick / 50) + 1;
 
-        createAxis(lowerGraphSvg, upperGraphSvg, numTick, maxTick);
-        createBars(upperGraphSvg, current_masses, goal_masses, "red", "green", current_sumMap, false);
-        createBars(lowerGraphSvg, goal_masses, current_masses, "black", "black", goal_sumMap, true);
+        let margin = 50;
+        let maxTick = (Math.ceil(goal_masses[goal_masses.length - 1] / 50) + 1) * 50;
+        let numTick = (maxTick / 50) + 1;
+
+        createAxis(lowerGraphSvg, upperGraphSvg, numTick, maxTick, margin);
+        createBars(upperGraphSvg, current_masses, goal_masses, "red", "green", current_sumMap, margin);
+        createBars(lowerGraphSvg, goal_masses, current_masses, "black", "black", goal_sumMap, margin);
+
+        createHelpButton();
     }
 
     // Function to update the graph based on the new masses
@@ -616,8 +651,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         // Update the bars
-        createBars(upperGraphSvg, GLOBAL_CURRENT_MASSES, GLOBAL_GOAL_MASSES, "red", "green", current_sumMap, false);
-        createBars(lowerGraphSvg, GLOBAL_GOAL_MASSES, GLOBAL_CURRENT_MASSES, "black", "black", goal_sumMap, true, animation=false); 
+        createBars(upperGraphSvg, GLOBAL_CURRENT_MASSES, GLOBAL_GOAL_MASSES, "red", "green", current_sumMap, 50);
+        createBars(lowerGraphSvg, GLOBAL_GOAL_MASSES, GLOBAL_CURRENT_MASSES, "black", "black", goal_sumMap, 50, animation=false);
     }
 
     const sortableListHeight = sortableList.offsetHeight;
