@@ -73,6 +73,7 @@ GLOBAL_GOAL_MASSES = []
 
 var partialFragmentsState = false;
 var BlackAndWhite = false;
+var BlackAndWhite_PreviousState;
 
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -612,34 +613,7 @@ document.addEventListener("DOMContentLoaded", function() {
         rect.addEventListener("transitionend", function() {
             rect.remove();
         });
-    }
-    
-    // Create and append the button to upperGraphSvg
-    function createHelpButton() {
-        // Create a container for the buttons
-        let buttonContainer = document.createElement("div");
-        buttonContainer.setAttribute("class", "button-container");
-    
-        // Create the first button
-        let helpBtn1 = document.createElement("button");
-        helpBtn1.setAttribute("id", "helpBtn1");
-        helpBtn1.setAttribute("class", "custom-btn help-btn");
-        helpBtn1.innerHTML = '<i class="fas fa-question"></i>';
-    
-        // Create the second button
-        let helpBtn2 = document.createElement("button");
-        helpBtn2.setAttribute("id", "helpBtn2");
-        helpBtn2.setAttribute("class", "custom-btn help-btn");
-        helpBtn2.innerHTML = '<i class="fas fa-cog"></i>';
-    
-        // Append both buttons to the container
-        buttonContainer.appendChild(helpBtn1);
-        buttonContainer.appendChild(helpBtn2);
-    
-        // Append the container to upperGraphSvg
-        upperGraphSvg.appendChild(buttonContainer);
-    }
-    
+    }    
 
     // Initialize the graph with axes and bars
     function initializeGraph(current_masses, goal_masses, current_sumMap, goal_sumMap) {
@@ -661,8 +635,6 @@ document.addEventListener("DOMContentLoaded", function() {
         createAxis(lowerGraphSvg, upperGraphSvg, numTick, maxTick, margin);
         createBars(upperGraphSvg, current_masses, goal_masses, color1, color2, current_sumMap, margin);
         createBars(lowerGraphSvg, goal_masses, current_masses, "black", "black", goal_sumMap, margin);
-
-        createHelpButton();
     }
 
     // Function to update the graph based on the new masses
@@ -695,8 +667,6 @@ document.addEventListener("DOMContentLoaded", function() {
         // Update the bars
         createBars(upperGraphSvg, GLOBAL_CURRENT_MASSES, GLOBAL_GOAL_MASSES, color1, color2, current_sumMap, 50);
         createBars(lowerGraphSvg, GLOBAL_GOAL_MASSES, GLOBAL_CURRENT_MASSES, "black", "black", goal_sumMap, 50, animation=false);
-
-        exampleFunction();
     }
 
     const sortableListHeight = sortableList.offsetHeight;
@@ -727,6 +697,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const HelpPopUp = document.getElementById('HelpPopUp');
 
     document.getElementById('helpBtn').addEventListener('click', function() {
+        BlackAndWhite_PreviousState = BlackAndWhite;
         overlay.style.display = 'block';
         HelpPopUp.style.display = 'block';
     });
@@ -750,6 +721,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const SettingsPopUp = document.getElementById('SettingsPopUp');
 
     document.getElementById('settingsBtn').addEventListener('click', function() {
+        BlackAndWhite_PreviousState = BlackAndWhite;
         overlay.style.display = 'block';
         SettingsPopUp.style.display = 'block';
     });
@@ -758,20 +730,24 @@ document.addEventListener("DOMContentLoaded", function() {
         overlay.style.display = 'none';
         SettingsPopUp.style.display = 'none';
 
-        // reset bars
-        const order = sortable.toArray();
-        const aminoSequence = order.map(item => sortableToAminoAcidsMap.get(item));
-        updateGraph(aminoSequence);
+        if (BlackAndWhite_PreviousState !== BlackAndWhite){
+            // reset bars
+            const order = sortable.toArray();
+            const aminoSequence = order.map(item => sortableToAminoAcidsMap.get(item));
+            updateGraph(aminoSequence);
+        }
     });
 
     overlay.addEventListener('click', function() {
         overlay.style.display = 'none';
         SettingsPopUp.style.display = 'none';
 
-        /// reset bars
-        const order = sortable.toArray();
-        const aminoSequence = order.map(item => sortableToAminoAcidsMap.get(item));
-        updateGraph(aminoSequence);
+        if (BlackAndWhite_PreviousState !== BlackAndWhite){
+            // reset bars
+            const order = sortable.toArray();
+            const aminoSequence = order.map(item => sortableToAminoAcidsMap.get(item));
+            updateGraph(aminoSequence);
+        }
     });
 
     SettingsPopUp.addEventListener('click', function(event) {
@@ -783,7 +759,7 @@ document.addEventListener("DOMContentLoaded", function() {
         location.reload();
     });
 
-    
+
     // Function to update global variables when checkboxes are clicked
     function updateStates() {
         partialFragmentsState = document.getElementById("partialFragments").checked;
@@ -793,10 +769,4 @@ document.addEventListener("DOMContentLoaded", function() {
     // Event listener for checkboxes
     document.getElementById("partialFragments").addEventListener("click", updateStates);
     document.getElementById("BlackAndWhite").addEventListener("click", updateStates);
-
-    // Example function to demonstrate accessing the global states
-    function exampleFunction() {
-        console.log("Partial Fragments state:", partialFragmentsState);
-        console.log("BlackAndWhite state:", BlackAndWhite);
-    }
 });
