@@ -470,7 +470,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Function to create bars with labels
     function createBars(svg, current_masses, other_masses, color1, color2, sumMap, margin, animation=true){
-        let barWidth = 7;
+        let barWidth = 6;
         let maxTick = (Math.ceil(current_masses[current_masses.length - 1] / 50) + 1) * 50;
         let line_spacing = 3;
         let width = inner_svgWidth - (margin * 2);
@@ -776,6 +776,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     SettingsPopUp.addEventListener('click', function(event) {
         event.stopPropagation();
+    });
+
+    // reset button
+    document.getElementById("refreshBtn").addEventListener("click", function() {
+        location.reload();
     });
 
     
