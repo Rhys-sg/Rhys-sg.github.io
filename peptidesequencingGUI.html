@@ -26,7 +26,7 @@
         <div class="lowerGraph graph-container"></div>
       </div>
       <div class="button-container">
-        <button id="settingBtn" class="custom-btn help-btn"><i class="fas fa-cog"></i></button>
+        <button id="settingsBtn" class="custom-btn settings-btn"><i class="fas fa-cog"></i></button>
         <button id="helpBtn" class="custom-btn help-btn"><i class="fas fa-question"></i></button>
       </div>
   </div>
@@ -44,14 +44,20 @@
     </div>
   </div>
 
-  <div id="SettingPopUp" class="popup">
-    <h2>Peptide Fragments</h2>
-    <p>Each bar represents the summed masses of a peptide fragment. The fragments range in length from dipeptides (length 2) to the entire peptide. All fragments include the C-terminus and/or N-terminus. The masses are arranged in ascending order, which does not necessarily alternate C- and N-terminus fragments: b2, y2, b3, y3, etc. <p>
-    <div class="image-container">
-      <img src="images/peptide_gui_fragments_bw.png" />
+  <div id="SettingsPopUp" class="popup" style="width: 300px; padding-right: 35px;">
+    <h2>Settings</h2>
+    <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px;">
+      <span style="margin-right: 2px; font-size: 16px;">Partial Fragments</span>
+      <input type="checkbox" id="partialFragments" style="transform: scale(0.75);" />
+      <label for="partialFragments" style="transform: scale(0.75);"></label>
     </div>
-    <div style="text-align: center;">
-      <span class="close">Close</span>
+    <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px;">
+      <span style="margin-right: 2px; font-size: 16px;">Color</span>
+      <input type="checkbox" id="Color" style="transform: scale(0.75);" />
+      <label for="Color" style="transform: scale(0.75);"></label>
+    </div>
+    <div style="text-align: center; margin-top: 40px;">
+      <span class="close" style="font-size: 16px;">Close</span>
     </div>
   </div>
 
