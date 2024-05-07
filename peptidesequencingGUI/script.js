@@ -71,6 +71,9 @@ const massMap = new Map();
 GLOBAL_CURRENT_MASSES = []
 GLOBAL_GOAL_MASSES = []
 
+var partialFragmentsState = false;
+var BlackAndWhite = false;
+
 document.addEventListener("DOMContentLoaded", function() {
 
     // ---------------------------------------------------------------------------------------- //
@@ -645,8 +648,18 @@ document.addEventListener("DOMContentLoaded", function() {
         let maxTick = (Math.ceil(goal_masses[goal_masses.length - 1] / 50) + 1) * 50;
         let numTick = (maxTick / 50) + 1;
 
+        let color1;
+        let color2;
+        if (BlackAndWhite){
+            color1 = "black";
+            color2 = "black";
+        } else {
+            color1 = "red";
+            color2 = "green";
+        }
+
         createAxis(lowerGraphSvg, upperGraphSvg, numTick, maxTick, margin);
-        createBars(upperGraphSvg, current_masses, goal_masses, "red", "green", current_sumMap, margin);
+        createBars(upperGraphSvg, current_masses, goal_masses, color1, color2, current_sumMap, margin);
         createBars(lowerGraphSvg, goal_masses, current_masses, "black", "black", goal_sumMap, margin);
 
         createHelpButton();
@@ -667,10 +680,23 @@ document.addEventListener("DOMContentLoaded", function() {
             undrawBar(cur_bars[i], i);
             undrawBar(goal_bars[i], i);
         }
+        
+        // color based on setting chexkbox
+        let color1;
+        let color2;
+        if (BlackAndWhite){
+            color1 = "black";
+            color2 = "black";
+        } else {
+            color1 = "red";
+            color2 = "green";
+        }
 
         // Update the bars
-        createBars(upperGraphSvg, GLOBAL_CURRENT_MASSES, GLOBAL_GOAL_MASSES, "red", "green", current_sumMap, 50);
+        createBars(upperGraphSvg, GLOBAL_CURRENT_MASSES, GLOBAL_GOAL_MASSES, color1, color2, current_sumMap, 50);
         createBars(lowerGraphSvg, GLOBAL_GOAL_MASSES, GLOBAL_CURRENT_MASSES, "black", "black", goal_sumMap, 50, animation=false);
+
+        exampleFunction();
     }
 
     const sortableListHeight = sortableList.offsetHeight;
@@ -695,6 +721,77 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     setGraphHeight();
     window.addEventListener('resize', setGraphHeight);
-});
-  
 
+
+    // Help "?" popup
+    const HelpPopUp = document.getElementById('HelpPopUp');
+
+    document.getElementById('helpBtn').addEventListener('click', function() {
+        overlay.style.display = 'block';
+        HelpPopUp.style.display = 'block';
+    });
+
+    HelpPopUp.querySelector('.close').addEventListener('click', function() {
+        overlay.style.display = 'none';
+        HelpPopUp.style.display = 'none';
+    });
+
+    overlay.addEventListener('click', function() {
+        overlay.style.display = 'none';
+        HelpPopUp.style.display = 'none';
+    });
+
+    HelpPopUp.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+
+
+    // Settings popup
+    const SettingsPopUp = document.getElementById('SettingsPopUp');
+
+    document.getElementById('settingsBtn').addEventListener('click', function() {
+        overlay.style.display = 'block';
+        SettingsPopUp.style.display = 'block';
+    });
+
+    SettingsPopUp.querySelector('.close').addEventListener('click', function() {
+        overlay.style.display = 'none';
+        SettingsPopUp.style.display = 'none';
+
+        // reset bars
+        const order = sortable.toArray();
+        const aminoSequence = order.map(item => sortableToAminoAcidsMap.get(item));
+        updateGraph(aminoSequence);
+    });
+
+    overlay.addEventListener('click', function() {
+        overlay.style.display = 'none';
+        SettingsPopUp.style.display = 'none';
+
+        /// reset bars
+        const order = sortable.toArray();
+        const aminoSequence = order.map(item => sortableToAminoAcidsMap.get(item));
+        updateGraph(aminoSequence);
+    });
+
+    SettingsPopUp.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+
+    
+    // Function to update global variables when checkboxes are clicked
+    function updateStates() {
+        partialFragmentsState = document.getElementById("partialFragments").checked;
+        BlackAndWhite = document.getElementById("BlackAndWhite").checked;
+    }
+
+    // Event listener for checkboxes
+    document.getElementById("partialFragments").addEventListener("click", updateStates);
+    document.getElementById("BlackAndWhite").addEventListener("click", updateStates);
+
+    // Example function to demonstrate accessing the global states
+    function exampleFunction() {
+        console.log("Partial Fragments state:", partialFragmentsState);
+        console.log("BlackAndWhite state:", BlackAndWhite);
+    }
+});

@@ -153,13 +153,13 @@ body {
   padding-right: 7px;
   padding-bottom: 0px;
   padding-left: 7px;
-  height: 90px;
   display: flex;
   flex-direction: column;
+  margin-bottom: 10px;
 }
 
-.settings-btn {
-  margin-bottom: 10px;
+.button-container .custom-btn {
+  margin-bottom: 10px; /* Set the margin between buttons */
 }
 
 .custom-btn {
@@ -296,9 +296,9 @@ label:active:after {
 }
 
 /* // centering */
-body {
+/* body {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 33vh;
-}
+} */

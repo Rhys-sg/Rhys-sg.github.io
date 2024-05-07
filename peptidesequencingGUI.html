@@ -25,8 +25,9 @@
         <h2>Goal Masses</h2>
         <div class="lowerGraph graph-container"></div>
       </div>
-      <div class="button-container">
+      <div class="button-container" style="height: 130px;">
         <button id="settingsBtn" class="custom-btn settings-btn"><i class="fas fa-cog"></i></button>
+        <button id="resetBtn" class="custom-btn reset-btn"><i class="fas fa-refresh"></i></button>
         <button id="helpBtn" class="custom-btn help-btn"><i class="fas fa-question"></i></button>
       </div>
   </div>
@@ -47,17 +48,17 @@
   <div id="SettingsPopUp" class="popup" style="width: 300px; padding-right: 35px;">
     <h2>Settings</h2>
     <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px;">
-      <span style="margin-right: 2px; font-size: 16px;">Partial Fragments</span>
-      <input type="checkbox" id="partialFragments" style="transform: scale(0.75);" />
-      <label for="partialFragments" style="transform: scale(0.75);"></label>
+        <span style="margin-right: 2px; font-size: 16px;">Partial Fragments</span>
+        <input type="checkbox" id="partialFragments" style="transform: scale(0.75);" />
+        <label for="partialFragments" style="transform: scale(0.75);"></label>
     </div>
     <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px;">
-      <span style="margin-right: 2px; font-size: 16px;">Color</span>
-      <input type="checkbox" id="Color" style="transform: scale(0.75);" />
-      <label for="Color" style="transform: scale(0.75);"></label>
+        <span style="margin-right: 2px; font-size: 16px;">Black and White</span>
+        <input type="checkbox" id="BlackAndWhite" style="transform: scale(0.75);"/>
+        <label for="BlackAndWhite" style="transform: scale(0.75);"></label>
     </div>
     <div style="text-align: center; margin-top: 40px;">
-      <span class="close" style="font-size: 16px;">Close</span>
+        <span class="close" id="closeButton" style="font-size: 16px;">Close</span>
     </div>
   </div>
 
