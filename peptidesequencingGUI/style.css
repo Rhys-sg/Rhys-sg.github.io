@@ -253,7 +253,7 @@ body {
 
 /* button by https://codepen.io/mburnette/ */
 
-input[type=checkbox]{
+/* input[type=checkbox]{
   height: 0;
   width: 0;
   visibility: hidden;
@@ -293,7 +293,7 @@ input:checked + label:after {
 
 label:active:after {
   width: 43.33px;
-}
+} */
 
 /* // centering */
 /* body {
