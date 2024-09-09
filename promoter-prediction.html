@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Deep Learning Sequence-to-Expression Genetics Tool</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+				<nav id="menu">
+					<h2>Menu</h2>
+					<ul>
+						<li><a href="index.html">Projects</a></li>
+						<li><a href="https://github.com/Rhys-sg">GitHub</a></li>
+						<li><a href="https://medium.com/@sorensor">Medium</a></li>
+						<li><a href="about.html">About</a></li>						
+					</ul>
+				</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1>Predictive Artificial Neural Networks for mRNA Transcriptional Profiles and Sequence Motifs</h1>
+							<span class="image header">
+								<a href="https://ecoli-promoter-prediction.onrender.com/">
+									<img src="images/promoter_prediction_GUI.png" alt="Promoter Prediction GUI" />
+								  </a>
+								  
+							</span>
+							<table>
+								<tr>
+								  <td>Background</td>
+								  <td>
+									<p>For the current version, see the <a href="https://ecoli-promoter-prediction.onrender.com/">frontend</a></p>
+									<p>For more information, see the <a href="https://github.com/Rhys-sg/TX-Prediction-GUI-Frontend">GitHub repository</a></p>
+									<p>A foundational goal of molecular microbiologists over the last 80 years has been to understand how genetic information carried in DNA is manifested in a unique and orderly manner. We now know that this is a complex and highly regulated two-step process that can rapidly adjust to a changing cellular environment. First, the genetic information is transcribed onto a mRNA intermediate via transcription, and second, the mRNA is decoded into proteins through translation. Regulation at each step of this central dogma determines the relative amounts of proteins produced. These changes in protein profile define the biochemical characteristics and adaptive potential of the cell over time.</p>
+									<p>mRNA synthesis in all organisms is performed by the RNA polymerases (RNAP). The rate of mRNA synthesis is an essential parameter in gene expression and is partially determined by how often and how well RNAP binds to the promoter sequence, an untranslated cis-regulatory element upstream of the gene. Researchers have already developed machine-learning tools to predict the transcription initiation rates in E. coli based on RNAP/σ70-promoter interactions. However, current prediction tools lack robustness and are prone to high error. These models are trained on limited datasets and/or are trained on select sections of promoter sequences.</p>
+								</tr>
+								<tr>
+									<td>Research</td>
+									<td>
+										<p>This research was the initial stage of my work for Professor Matthew Tien, where we used deep machine learning as a teaching method for undergraduate students to learn about the relationship between promoters and phenotypes. In a new introductory biology laboratory course, first-year students will experience their first course-based undergraduate research experience (CURE): to design synthetic E. coli promoter sequences and test the expression of their promoter sequences.  </p>
+										<p>For this lab, I trained a more robust convolutional neural network on several publicly available datasets that explored the sequence space of E. coli promoter sequences. For tuning, I used heuristic and hyper-parameter-turning neural network strategies to build our final deep-learning model. This model has a mean squared error 44% lower than machine learning models trained on the same data and, unlike other models, can receive DNA sequences of variable length. I also built a web-based graphical user interface (GUI) that houses our deep-learning model, which allows users to input promoter DNA sequences and returns a quantitative prediction of the promoter’s ability to drive gene expression. </p>
+										<p>The GUI helps students design non-canonical promoter sequences and lets them compare their results with the deep-learning model’s prediction of their promoter sequences. Before the lab, students will use the GUI to design a synthetic promoter, step through the Golden Gate Assembly process in silico, and obtain predictions of synthetic promoters' effect on gene expression. Then, students will upload their fluorescence intensity results and compare them with the deep-learning model’s results in the GUI. The GUI acts as an iterative database, meaning newly uploaded student-generated data will be used to retrain our deep-learning model of bacterial transcription. </p>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<ul class="copyright">
+								<li>Design by <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
